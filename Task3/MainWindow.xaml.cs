@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Markup;
+using System;
 using System.Collections.Generic;
-using System.Xml.Linq;
-using System.Linq;
-using System.Windows.Media;
-using System.Xml;
+using System.Windows;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace Task3
 {
@@ -18,16 +16,18 @@ namespace Task3
         static EventHandler startTimerHandler = null;
         static EventHandler pauseTimerHandler = null;
         static EventHandler stopTimerHandler = null;
+        ObservableCollection<TaskBox> tasks;
         public TaskBox tb = null;
         private bool timerIsActive;
-        private int tasks = 0;
+        private int taskCounter = 0;
         private Presenter presenter = null;
 
-        public int TaskID { get { return tasks; } }
+        public int TaskID { get { return taskCounter; } }
         public MainWindow()
         {
             presenter = new Presenter(this);
             timerIsActive = false;
+            tasks = new ObservableCollection<TaskBox>();
             InitializeComponent();
         }
         internal Presenter Presenter
@@ -53,24 +53,13 @@ namespace Task3
             remove { stopTimerHandler -= value; }
         }
 
-        private void btnPause_Click(object sender, RoutedEventArgs e)
-        {
-            pauseTimerHandler.Invoke(sender, e);
-        }
-
-        private void btnStartPause_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        public object lol = null;
-
         private void btnAddTimer_Click(object sender, RoutedEventArgs e)
         {
             tb = new TaskBox();
-            tb.ID = tasks;
-            listTasks.Items.Add(tb);
-            tasks++;
+            tb.ID = taskCounter;
+            tasks.Add(tb);
+            tasksStackPanel.Children.Add(tb);
+            taskCounter++;
         }
     }
 }

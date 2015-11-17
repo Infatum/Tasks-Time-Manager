@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.ComponentModel;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -20,17 +22,48 @@ namespace Task3
     /// <summary>
     /// Interaction logic for TaskBox.xaml
     /// </summary>
-    public partial class TaskBox : UserControl
+    public partial class TaskBox : UserControl, INotifyPropertyChanged
     {
-        static EventHandler startTimerHandler;
-        static EventHandler pauseTimerHandler;
-        static EventHandler stopTimerHandler;
+        public event PropertyChangedEventHandler PropertyChanged;
         DispatcherTimer timer;
         Model model;
         Presenter p;
         bool timerIsActive;
+        int _timer = 0;
+        string _title;
+
+
 
         public int ID { get; set; }
+        public int Timer
+        {
+            get { return this._timer; }
+            set
+            {
+                this._timer = value;
+                this.NotifyPropertyChanged("TaskTimerText");
+            }
+        }
+        public string TaskTimerText
+        {
+            get { return $"Logged 00:{this._timer / 60}:{this._timer % 60}"; }
+        }
+
+        public string TaskTitleText
+        {
+            get { return this._title; }
+            set
+            {
+                this._title = value;
+                this.NotifyPropertyChanged("TaskTitleText");
+            }
+        }
+
+        public void NotifyPropertyChanged(string propName)
+        {
+            if (this.PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+        }
 
         public TaskBox()
         {
@@ -39,6 +72,7 @@ namespace Task3
             this.timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 1);
             this.model = new Model();
+            this.DataContext = this;
         }
 
         /// <summary>
@@ -49,9 +83,8 @@ namespace Task3
         public void Timer_Tick(object sender, EventArgs e)
         {
             textBlock.Foreground = Brushes.Black;
-            timer.Start();
-            model.Time++;
-            textBlock.Text = $"Logged: {model.ShowTime()}";
+            //model.Time++;
+            this.Timer++;
         }
 
         /// <summary>
@@ -82,7 +115,7 @@ namespace Task3
                 b.Background = Brushes.DarkGray;
                 timerIsActive = true;
             }
-            else if (timerIsActive == true)
+            else
             {
                 timer.Tick -= Timer_Tick;
                 timer.Stop();

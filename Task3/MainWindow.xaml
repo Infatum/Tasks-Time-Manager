@@ -6,25 +6,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Task3"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="269" MinWidth="300" Height="300" Width="300">
+        Title="MainWindow" MinHeight="280" MinWidth="320" Height="300" Width="350">
     <Grid x:Name="MainGrid" ShowGridLines="True" Margin="0,0,0,1">
-        <!--<Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>-->
         <Button x:Name="btnAddTimer" Content="Add Timer" FontSize="12" Background="LightGray" Foreground="Black" Margin="0,6,10,0" HorizontalAlignment="Right" Width="132" Height="25" VerticalAlignment="Top" Click="btnAddTimer_Click"/>
         <Button x:Name="btnAddGenerateTextReport" Content="Generate Text Report" FontSize="12" Background="LightGray" Foreground="Black" Margin="10,6,0,0" HorizontalAlignment="Left" Width="135" Height="25" VerticalAlignment="Top"/>
-        <!--<StackPanel x:Name="listTasks" Margin="10,36,10,10"/>-->
-        <ListBox x:Name="listTasks" Margin="10,36,10,10">
-        </ListBox>
-
-        <!--<Border BorderBrush="Black" BorderThickness="1" Margin="10,40,10,0" Height="177" VerticalAlignment="Top">
-            <Grid x:Name="GridTasks" Margin="0,-1" Height="177" VerticalAlignment="Bottom">
-                -->
-        <!--<Button x:Name="btnStartPause" Content="Start" FontSize="14" Background="Gray" Foreground="White" Margin="0,139,10,0" Click="btnStartPause_Click" HorizontalAlignment="Right" Width="121" Height="28" VerticalAlignment="Top" />
-                <TextBox x:Name="textBoxTask" Height="54" Margin="10,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-                <TextBlock x:Name="textBlockCountDown" HorizontalAlignment="Right" FontSize="20" Margin="0,137,147,0" TextWrapping="Wrap" Text="" TextAlignment="Center" FontWeight="Regular" VerticalAlignment="Top" Height="30" Width="151"/>-->
-        <!--
-            </Grid>
-        </Border>-->
+        <ScrollViewer Margin="10,36,10,10" VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="tasksStackPanel" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>
