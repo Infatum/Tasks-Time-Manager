@@ -8,7 +8,7 @@
              d:DesignHeight="70" d:DesignWidth="300"
              Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
     <Grid>
-        <Button x:Name="btnTimer" Content="Start" Margin="182,40,10,10" Tag="Start/Pause_Button"/>
+        <Button x:Name="btnTimer" Content="Start" Margin="182,40,10,10" Tag="Start/Pause_Button" Click="btnStartPause_Click"/>
         <TextBox x:Name="textBoxTask" Height="24" Margin="10,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
         <TextBlock x:Name="textBlock" Margin="10,40,90,10" TextWrapping="Wrap" Text="Logged: "/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="62" Margin="6,4,0,0" VerticalAlignment="Top" Width="289"/>

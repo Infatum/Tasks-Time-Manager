@@ -58,30 +58,6 @@ namespace Task3
             pauseTimerHandler.Invoke(sender, e);
         }
 
-        /// <summary>
-        /// Start/pause timer
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnStartPause_Click(object sender, RoutedEventArgs e)
-        {
-            var b = sender as Button;
-            if (timerIsActive == false)
-            {
-                startTimerHandler.Invoke(sender, e);
-                b.Content = "Pause";
-                b.Background = Brushes.DarkGray;
-                timerIsActive = true;
-            }
-            else if (timerIsActive == true)
-            {
-                pauseTimerHandler.Invoke(sender, e);
-                b.Content = "Start";
-                b.Background = Brushes.Gray;
-                timerIsActive = false;
-            }
-        }
-
         private void btnStartPause_Click_1(object sender, RoutedEventArgs e)
         {
 
@@ -92,22 +68,9 @@ namespace Task3
         private void btnAddTimer_Click(object sender, RoutedEventArgs e)
         {
             tb = new TaskBox();
-            tb.N = tasks;
-            tb.btnTimer.Click += btnStartPause_Click;
+            tb.ID = tasks;
             listTasks.Items.Add(tb);
             tasks++;
-
-            //XElement root = XElement.Load("TaskBox.xaml");
-            //var butt = from el in root.Elements("Grid") where el.Element("Button").Name == "btnAddTimer" select el;
-
-            //listTasks.Children.Add(timerBoxUI);
-
-            //Grid g = new Grid();
-            //g.Width = 308;
-            //g.Height = 193;
-            //g.VerticalAlignment = VerticalAlignment.Bottom;
-
-            // g.Margin = new Thickness();
         }
     }
 }
