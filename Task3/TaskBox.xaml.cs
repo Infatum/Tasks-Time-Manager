@@ -29,7 +29,7 @@ namespace Task3
         Model model;
         Presenter p;
         bool timerIsActive;
-        int _timer = 0;
+        int _timer = 658;
         string _title;
 
 
@@ -44,9 +44,10 @@ namespace Task3
                 this.NotifyPropertyChanged("TaskTimerText");
             }
         }
+
         public string TaskTimerText
-        {
-            get { return $"Logged 00:{this._timer / 60}:{this._timer % 60}"; }
+        { 
+            get { return $"Logged {_timer / 3600}:{this._timer % 3600 / 60}:{this._timer % 60}"; }
         }
 
         public string TaskTitleText

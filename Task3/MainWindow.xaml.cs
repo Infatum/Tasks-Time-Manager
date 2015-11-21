@@ -34,11 +34,13 @@ namespace Task3
         {
             get { return presenter; }
         }
+
         public event EventHandler StartTimer
         {
             add { startTimerHandler += value; }
             remove { startTimerHandler -= value; }
         }
+
         public event EventHandler PauseTimer
         {
             add
@@ -47,6 +49,7 @@ namespace Task3
             }
             remove { pauseTimerHandler -= value; }
         }
+
         public event EventHandler StopTimer
         {
             add { stopTimerHandler += value; }
