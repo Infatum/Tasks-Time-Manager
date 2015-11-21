@@ -1,0 +1,9 @@
+-- Script Date: 11/21/2015 11:31 PM  - ErikEJ.SqlCeScripting version 3.5.2.56
+CREATE TABLE [Tasks] (
+  [TasksID] INTEGER NOT NULL
+, [TaskName] nchar(100) NOT NULL
+, [TaskDescription] nchar(100) NOT NULL
+, [TaskStartTime] datetime NOT NULL
+, [TaskTrackedTime] datetime NOT NULL
+, CONSTRAINT [PK_Tasks] PRIMARY KEY ([TasksID])
+);

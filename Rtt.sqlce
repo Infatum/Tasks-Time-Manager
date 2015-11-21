@@ -1,0 +1,6 @@
+-- Script Date: 11/21/2015 11:30 PM  - ErikEJ.SqlCeScripting version 3.5.2.56
+CREATE TABLE [Rtt] (
+  [Id] INTEGER NOT NULL
+, [sadasd] datetime NOT NULL
+, CONSTRAINT [PK_Rtt] PRIMARY KEY ([Id])
+);

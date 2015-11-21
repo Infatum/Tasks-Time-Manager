@@ -29,7 +29,6 @@ namespace Task3
         Model model;
         Presenter p;
         bool timerIsActive;
-        int _timer = 658;
         string _title;
 
 
@@ -37,17 +36,17 @@ namespace Task3
         public int ID { get; set; }
         public int Timer
         {
-            get { return this._timer; }
+            get { return this.model.Time; }
             set
             {
-                this._timer = value;
+                this.model.Time = value;
                 this.NotifyPropertyChanged("TaskTimerText");
             }
         }
 
         public string TaskTimerText
         { 
-            get { return $"Logged {_timer / 3600}:{this._timer % 3600 / 60}:{this._timer % 60}"; }
+            get { return model.ShowTime(); }
         }
 
         public string TaskTitleText

@@ -20,7 +20,6 @@ namespace Task3
         }
         internal Model Model
         {
-
             get { return model; }
             set { model = value; }
         }
