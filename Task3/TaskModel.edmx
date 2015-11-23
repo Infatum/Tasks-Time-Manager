@@ -33,7 +33,7 @@
           <Property Name="TaskStartTime" Type="DateTime" Nullable="false" />
           <Property Name="TaskTrackedTime" Type="DateTime" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="TasksEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="TasksEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Tasks" EntityType="Self.Task" />
         </EntityContainer>
       </Schema>
@@ -41,7 +41,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TasksModelStoreContainer" CdmEntityContainer="TasksEntities">
+        <EntityContainerMapping StorageEntityContainer="TasksModelStoreContainer" CdmEntityContainer="TasksEntities1">
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="TasksModel.Task">
               <MappingFragment StoreEntitySet="Tasks">

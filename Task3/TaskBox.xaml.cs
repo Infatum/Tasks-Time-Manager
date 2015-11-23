@@ -31,49 +31,15 @@ namespace Task3
         bool timerIsActive;
         string _title;
 
-
-
-        public int ID { get; set; }
-        public int Timer
-        {
-            get { return this.model.Time; }
-            set
-            {
-                this.model.Time = value;
-                this.NotifyPropertyChanged("TaskTimerText");
-            }
-        }
-
-        public string TaskTimerText
-        { 
-            get { return model.ShowTime(); }
-        }
-
-        public string TaskTitleText
-        {
-            get { return this._title; }
-            set
-            {
-                this._title = value;
-                this.NotifyPropertyChanged("TaskTitleText");
-            }
-        }
-
-        public void NotifyPropertyChanged(string propName)
-        {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
-        }
-
         public TaskBox()
         {
             InitializeComponent();
             textBlock.Tag = ID;
-            this.timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 1);
             this.model = new Model();
-            this.DataContext = this;
+            this.DataContext = this.model;
         }
+
+        public int ID { get; set; }
 
         /// <summary>
         /// Tick for a timer
@@ -82,9 +48,7 @@ namespace Task3
         /// <param name="e"></param>
         public void Timer_Tick(object sender, EventArgs e)
         {
-            textBlock.Foreground = Brushes.Black;
-            //model.Time++;
-            this.Timer++;
+            model.Timer_Tick(sender, e);
         }
 
         /// <summary>
@@ -109,18 +73,16 @@ namespace Task3
             var b = sender as Button;
             if (timerIsActive == false)
             {
-                timer.Tick += Timer_Tick;
-                timer.Start();
+                model.StartResumeTimer();
                 b.Content = "Pause";
                 b.Background = Brushes.DarkGray;
                 timerIsActive = true;
             }
             else
             {
-                timer.Tick -= Timer_Tick;
-                timer.Stop();
+                model.StopPauseTimer();
                 textBlock.Foreground = Brushes.Blue;
-                b.Content = "Start";
+                b.Content = "Куігьу";
                 b.Background = Brushes.Gray;
                 timerIsActive = false;
             }
