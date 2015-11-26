@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Windows.Threading;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows;
 
 namespace Task3
 {
-    public class Presenter
+    public class TaskViewModel 
     {
-        Model model = null;
+        TaskModel model = null;
         MainWindow mainwindow = null;
         DispatcherTimer Timer;
         int n = 0;
 
-        public Presenter(MainWindow mainWindow)
+        public TaskViewModel(MainWindow mainWindow)
         {
-            this.model = new Model();
+            this.model = new TaskModel();
             this.mainwindow = mainWindow;
         }
-        internal Model Model
+        internal TaskModel Model
         {
             get { return model; }
             set { model = value; }

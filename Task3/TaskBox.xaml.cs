@@ -25,18 +25,18 @@ namespace Task3
     public partial class TaskBox : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        DispatcherTimer timer;
-        Model model;
-        Presenter p;
-        bool timerIsActive;
+        DispatcherTimer _timer;
+        TaskModel _model;
+        TaskViewModel p;
+        bool _timerIsActive;
         string _title;
 
         public TaskBox()
         {
             InitializeComponent();
             textBlock.Tag = ID;
-            this.model = new Model();
-            this.DataContext = this.model;
+            this._model = new TaskModel();
+            this.DataContext = this._model;
         }
 
         public int ID { get; set; }
@@ -48,20 +48,15 @@ namespace Task3
         /// <param name="e"></param>
         public void Timer_Tick(object sender, EventArgs e)
         {
-            model.Timer_Tick(sender, e);
+            _model.Timer_Tick(sender, e);
         }
 
         /// <summary>
-        /// Stops the timer
+        /// Stops the timer TODO
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Timer_Stop(object sender, EventArgs e)
-        {
-            //mainwindow.textBlockCountDown.Text = "";
-            timer.IsEnabled = false;
-            model.ResetTime();
-        }
+   
 
         /// <summary>
         /// Start/pause timer
@@ -71,20 +66,24 @@ namespace Task3
         private void btnStartPause_Click(object sender, RoutedEventArgs e)
         {
             var b = sender as Button;
-            if (timerIsActive == false)
+            if (_timerIsActive == false)
             {
-                model.StartResumeTimer();
+                if (b.Content.ToString() == "Start")
+                {
+                    _model.AddSession(_model.Time,textBoxTask.Text);
+                }
+                _model.StartResumeTimer();
                 b.Content = "Pause";
                 b.Background = Brushes.DarkGray;
-                timerIsActive = true;
+                _timerIsActive = true;
             }
             else
             {
-                model.StopPauseTimer();
+                _model.StopPauseTimer();
                 textBlock.Foreground = Brushes.Blue;
-                b.Content = "Куігьу";
+                b.Content = "Resume";
                 b.Background = Brushes.Gray;
-                timerIsActive = false;
+                _timerIsActive = false;
             }
         }
     }

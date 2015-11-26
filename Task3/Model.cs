@@ -1,24 +1,31 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Windows;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Threading;
 using System.ComponentModel;
 
 namespace Task3
 {
-    public class Model : INotifyPropertyChanged
+    public class TaskModel : INotifyPropertyChanged
     {
         private int _time = 0;
+        private string _name = null;
         bool _timerIsActive = false;
-        Task _task;
+        TaskInfo _task;
+        TaskInfoData _taskEntities;
         DispatcherTimer _timer;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Model()
+        public TaskModel()
         {
             _timer = new DispatcherTimer();
-            _timer.Interval = new TimeSpan(0, 0, 1); // Забула ось цю строку, тому таймер працював швидко
+            _timer.Interval = new TimeSpan(0, 0, 1);
+            _taskEntities = new TaskInfoData();
         }
+
         public int Time
         {
             get { return _time; }
@@ -28,15 +35,31 @@ namespace Task3
                 NotifyPropertyChanged("TaskTimerText"); // sAY TO ALL THAT data changed, and need find it in TaskTimerText
             }
         }
+
         public string TaskTimerText
         {
             get { return ShowTime(); } // Return formatted text to "listeners" who receive PropertyChanged "signal"
         }
 
-        public DateTime ProjectStartTime { get; set; }
-        public int Timer { get; set; }
-        public TimeSpan TrackedTime { get; set; }
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                NotifyPropertyChanged("TaskNameText"); // sAY TO ALL THAT data changed, and need find it in TaskTimerText
+            }
+        }
 
+        public string TaskNameText
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+            }
+                
+        }
 
         public void NotifyPropertyChanged(string propName)
         {
@@ -44,13 +67,8 @@ namespace Task3
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
 
-        /// <summary>
-        /// Reset timer
-        /// </summary>
-        public void ResetTime()
-        {
-            _time = 0;
-        }
+        
+
         /// <summary>
         /// The  timer performance
         /// </summary>
@@ -69,7 +87,17 @@ namespace Task3
         {
             Time++;
         }
-
+        
+        public void AddSession(int time, string name)
+        {
+            _taskEntities.TaskDataEntities.Add(new TaskInfo() { Name = name, TrackedTime = time });
+            _taskEntities.SaveChanges();
+            var list = _taskEntities.TaskDataEntities.ToList();
+            foreach (var item in list)
+            {
+                MessageBox.Show($"{item.Name} : ${item.TrackedTime}");
+            }
+        }
         /// <summary>
         /// Starts/resumes timer
         /// </summary>

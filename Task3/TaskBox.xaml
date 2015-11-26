@@ -8,7 +8,7 @@
              d:DesignHeight="70" d:DesignWidth="300"
              Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
     <Grid>
-        <TextBox x:Name="textBoxTask" Height="24" Margin="5,10,5,10" TextWrapping="Wrap" Text="{Binding Path=TaskTitleText}" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxTask" Height="24" Margin="5,10,5,10" TextWrapping="Wrap" Text="{Binding Path=TaskNameText}" VerticalAlignment="Top"/>
         <TextBlock x:Name="textBlock" Margin="10,40,123,10" TextWrapping="Wrap" Text="{Binding Path=TaskTimerText}" FontSize="13.333"/>
         <Button x:Name="btnTimer" Content="Start" Margin="0,40,5,10" Tag="Start/Pause_Button" Click="btnStartPause_Click" HorizontalAlignment="Right" Width="108"/>
         <Border BorderBrush="Black" BorderThickness="1" Margin="0,5,0,5"/>
