@@ -5,6 +5,7 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows;
 
+/*
 namespace Task3
 {
     public class TaskViewModel 
@@ -16,7 +17,7 @@ namespace Task3
 
         public TaskViewModel(MainWindow mainWindow)
         {
-            this.model = new TaskModel();
+            this.model = new TaskModel(id);
             this.mainwindow = mainWindow;
         }
         internal TaskModel Model
@@ -26,3 +27,4 @@ namespace Task3
         }
     }
 }
+*/

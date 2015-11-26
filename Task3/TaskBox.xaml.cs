@@ -27,15 +27,15 @@ namespace Task3
         public event PropertyChangedEventHandler PropertyChanged;
         DispatcherTimer _timer;
         TaskModel _model;
-        TaskViewModel p;
+        //TaskViewModel p;
         bool _timerIsActive;
         string _title;
 
-        public TaskBox()
+        public TaskBox(int taskID)
         {
             InitializeComponent();
             textBlock.Tag = ID;
-            this._model = new TaskModel();
+            this._model = new TaskModel(taskID);
             this.DataContext = this._model;
         }
 

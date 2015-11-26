@@ -14,28 +14,28 @@ namespace Task3
         ObservableCollection<TaskBox> tasks;
         public TaskBox tb = null;
         private bool timerIsActive;
-        private int taskCounter = 0;
-        private TaskViewModel presenter = null;
+        private int taskCounter = 1;
+        //private TaskViewModel presenter = null;
 
         public int TaskID { get { return taskCounter; } }
 
         public MainWindow()
         {
-            presenter = new TaskViewModel(this);
+            //presenter = new TaskViewModel(this);
             timerIsActive = false;
             tasks = new ObservableCollection<TaskBox>();
             InitializeComponent();
 
         }
 
-        internal TaskViewModel Presenter
-        {
-            get { return presenter; }
-        }
+        //internal TaskViewModel Presenter
+        //{
+        //    get { return presenter; }
+        //}
 
         private void btnAddTimer_Click(object sender, RoutedEventArgs e)
         {
-            tb = new TaskBox();
+            tb = new TaskBox(taskCounter);
             tb.ID = taskCounter;
             tasks.Add(tb);
             tasksStackPanel.Children.Add(tb);
