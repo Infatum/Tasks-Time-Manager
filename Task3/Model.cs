@@ -16,7 +16,7 @@ namespace Task3
         private string _name = null;
         bool _timerIsActive = false;
         TaskInfo _task;
-        TaskInfoData _taskEntities;
+        TaskInfoContext _taskEntities;
         DispatcherTimer _timer;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -26,7 +26,7 @@ namespace Task3
             _id = id;
             _timer = new DispatcherTimer();
             _timer.Interval = new TimeSpan(0, 0, 1);
-            _taskEntities = new TaskInfoData();
+            _taskEntities = new TaskInfoContext();
         }
 
         public int Time
@@ -38,7 +38,7 @@ namespace Task3
                 NotifyPropertyChanged("TaskTimerText");
             }
         }
-
+        public int ModelTaskID { get { return _id; } }
         public string TaskTimerText
         {
             get { return ShowTime(); }
@@ -103,12 +103,15 @@ namespace Task3
         /// <param name="name"></param>
         public void AddSession(int time, string name)
         {
-            _taskEntities.TaskDataEntities.Add(new TaskInfo() { Name = name, TrackedTime = time });
-            _taskEntities.SaveChanges();
-            var list = _taskEntities.TaskDataEntities.ToList();
-            foreach (var item in list)
+            using (_taskEntities)
             {
-                MessageBox.Show($"{item.Name} : ${item.TrackedTime}");
+                _taskEntities.TaskDataEntities.Add(new TaskInfo() { Name = name, TrackedTime = time, TaskBoxID = _id });
+                _taskEntities.SaveChanges();
+                var list = _taskEntities.TaskDataEntities.ToList();
+                foreach (var item in list)
+                {
+                    MessageBox.Show($"{item.Name} : ${item.TrackedTime}");
+                }
             }
         }
 
@@ -122,16 +125,17 @@ namespace Task3
         {
             try
             {
-                using (TaskInfoData context = new TaskInfoData())
+                using (_taskEntities)
                 {
-                    var task = (from t in context.TaskDataEntities where t.ID == id select t).First();
-                    task.Name = Name;
-                    task.TrackedTime = Time;
+                    var task = from t in _taskEntities.TaskDataEntities where t.TaskBoxID == id select t;
+                    TaskInfo currenttask = task as TaskInfo;
+                    currenttask.Name = Name;
+                    currenttask.TrackedTime = Time;
 
-                    context.SaveChanges();
+                    _taskEntities.SaveChanges();
                 }
             }
-            catch (UpdateException ex)
+            catch (NullReferenceException ex)
             {
                 MessageBox.Show(ex.ToString());
             }

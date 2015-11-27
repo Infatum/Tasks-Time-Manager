@@ -76,6 +76,11 @@ namespace Task3
                 b.Content = "Pause";
                 b.Background = Brushes.DarkGray;
                 _timerIsActive = true;
+
+                if (_model.Time % 3 == 0)
+                {
+                    _model.UpdateSession(_model.ModelTaskID, _model.Time, _model.Name);
+                }
             }
             else
             {

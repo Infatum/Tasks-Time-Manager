@@ -81,6 +81,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Migrations\201511272033278_AddTaskInfoTaskBoxID.cs" />
+    <Compile Include="Migrations\201511272033278_AddTaskInfoTaskBoxID.Designer.cs">
+      <DependentUpon>201511272033278_AddTaskInfoTaskBoxID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="TaskBox.xaml.cs">
       <DependentUpon>TaskBox.xaml</DependentUpon>
@@ -119,6 +124,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\201511272033278_AddTaskInfoTaskBoxID.resx">
+      <DependentUpon>201511272033278_AddTaskInfoTaskBoxID.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

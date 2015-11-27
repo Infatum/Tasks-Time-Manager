@@ -11,5 +11,6 @@ namespace Task3
         public int ID { get; set; }
         public string Name { get; set; }
         public int TrackedTime { get; set; }
+        public int TaskBoxID { get; set; }
     }
 }
