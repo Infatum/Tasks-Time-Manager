@@ -14,14 +14,15 @@ namespace Task3
         ObservableCollection<TaskBox> tasks;
         public TaskBox tb = null;
         private bool timerIsActive;
-        private int taskCounter = 1;
+        static int taskCounter = 0;
         //private TaskViewModel presenter = null;
 
-        public int TaskID { get { return taskCounter; } }
+        public static int TaskID { get { return taskCounter; } }
 
         public MainWindow()
         {
             //presenter = new TaskViewModel(this);
+
             timerIsActive = false;
             tasks = new ObservableCollection<TaskBox>();
             InitializeComponent();

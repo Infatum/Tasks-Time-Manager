@@ -2,16 +2,24 @@
 using System.Windows.Controls;
 using System.Windows;
 using System.Collections.Generic;
+using System.Data.SQLite;
+using System.Linq.Expressions;
+using System.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Windows.Threading;
 using System.ComponentModel;
+using System.Text;
+using System.Data.Objects;
+using System.Globalization;
+using System.Data.EntityClient;
+using System.Data.Common;
 
 namespace Task3
 {
     public class TaskModel : INotifyPropertyChanged
     {
-        int _id = 1;
+        int _id;
         private int _time = 0;
         private string _name = null;
         bool _timerIsActive = false;
@@ -54,6 +62,8 @@ namespace Task3
             }
         }
 
+
+
         public string TaskNameText
         {
             get { return _name; }
@@ -89,13 +99,15 @@ namespace Task3
         public void Timer_Tick(object sender, EventArgs e)
         {
             Time++;
-            if (Time % 3 == 0)
+            if (Time != 0 && Time % 3 == 0)
             {
-                MessageBox.Show(_id.ToString());
-                UpdateSession(_id, Time, Name );
+                UpdateSession(ModelTaskID, Time, Name);
             }
         }
-
+        public int GetID()
+        {
+            return _id;
+        }
         /// <summary>
         /// Edds a new task session to the DB
         /// </summary>
@@ -103,16 +115,15 @@ namespace Task3
         /// <param name="name"></param>
         public void AddSession(int time, string name)
         {
-            using (_taskEntities)
+            _taskEntities.TaskDataEntities.Add(new TaskInfo() { Name = name, TrackedTime = time, TaskBoxID = _id });
+            _taskEntities.SaveChanges();
+            var list = _taskEntities.TaskDataEntities.ToList();
+            var tmp_message = "";
+            foreach (var item in list)
             {
-                _taskEntities.TaskDataEntities.Add(new TaskInfo() { Name = name, TrackedTime = time, TaskBoxID = _id });
-                _taskEntities.SaveChanges();
-                var list = _taskEntities.TaskDataEntities.ToList();
-                foreach (var item in list)
-                {
-                    MessageBox.Show($"{item.Name} : ${item.TrackedTime}");
-                }
+                tmp_message += $"ID:{item.TaskBoxID} Time:${item.TrackedTime} Name:{item.Name}\n";
             }
+            MessageBox.Show(tmp_message);
         }
 
         /// <summary>
@@ -123,22 +134,19 @@ namespace Task3
         /// <param name="name"></param>
         public void UpdateSession(int id, int time, string name)
         {
-            try
-            {
-                using (_taskEntities)
-                {
-                    var task = from t in _taskEntities.TaskDataEntities where t.TaskBoxID == id select t;
-                    TaskInfo currenttask = task as TaskInfo;
-                    currenttask.Name = Name;
-                    currenttask.TrackedTime = Time;
+            var task = (from t in _taskEntities.TaskDataEntities where t.TaskBoxID == id select t).First();
 
-                    _taskEntities.SaveChanges();
-                }
-            }
-            catch (NullReferenceException ex)
+            if (task == null)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("ERROR: Task not found in DB. Skip savig...");
+                return;
             }
+
+            task.Name = this.Name;
+            task.TrackedTime = this.Time;
+            MessageBox.Show("Task saved.\n Name:" + task.Name + "\n TaskID:" + task.TaskBoxID + "\n TaskTime:" + task.TrackedTime);
+
+            _taskEntities.SaveChanges();
         }
 
         /// <summary>
