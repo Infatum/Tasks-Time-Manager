@@ -91,7 +91,7 @@
       <DependentUpon>TaskBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="TaskInfo.cs" />
-    <Compile Include="TaskInfoData.cs" />
+    <Compile Include="TaskInfoContext.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -36,6 +36,7 @@ namespace Task3
             InitializeComponent();
             textBlock.Tag = ID;
             this._model = new TaskModel(taskID);
+            _model.CreateDB();
             this.DataContext = this._model;
         }
 

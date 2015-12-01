@@ -9,6 +9,8 @@ using System.Data;
 using System.Linq;
 using System.Windows.Threading;
 using System.ComponentModel;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Text;
 using System.Data.Objects;
 using System.Globalization;
@@ -29,12 +31,12 @@ namespace Task3
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public TaskModel() { }
         public TaskModel(int id)
         {
             _id = id;
             _timer = new DispatcherTimer();
             _timer.Interval = new TimeSpan(0, 0, 1);
-            _taskEntities = new TaskInfoContext();
         }
 
         public int Time
@@ -58,12 +60,13 @@ namespace Task3
             set
             {
                 _name = value;
-                NotifyPropertyChanged("TaskNameText"); // sAY TO ALL THAT data changed, and need find it in TaskTimerText
+                NotifyPropertyChanged("TaskNameText"); 
             }
         }
 
-
-
+        /// <summary>
+        /// 
+        /// </summary>
         public string TaskNameText
         {
             get { return _name; }
@@ -101,12 +104,32 @@ namespace Task3
             Time++;
             if (Time != 0 && Time % 3 == 0)
             {
-                UpdateSession(ModelTaskID, Time, Name);
+                UpdateSession(ModelTaskID, Time, TaskNameText);
             }
         }
         public int GetID()
         {
             return _id;
+        }
+        public void CreateDB()
+        {
+            _taskEntities = new TaskInfoContext();
+        }
+
+        public void EndSession()
+        {
+            using (_taskEntities)
+            {
+                UpdateSession(_id, Time, Name);
+            }
+        }
+        public void LoadSession()
+        {
+            TaskInfoContext taskContext = new TaskInfoContext();
+            if (taskContext.TaskDataEntities.Count() != 0)
+            {
+                _taskEntities.TaskDataEntities.Load();
+            }
         }
         /// <summary>
         /// Edds a new task session to the DB
@@ -142,9 +165,8 @@ namespace Task3
                 return;
             }
 
-            task.Name = this.Name;
-            task.TrackedTime = this.Time;
-            MessageBox.Show("Task saved.\n Name:" + task.Name + "\n TaskID:" + task.TaskBoxID + "\n TaskTime:" + task.TrackedTime);
+            task.Name = name;
+            task.TrackedTime = time;
 
             _taskEntities.SaveChanges();
         }
