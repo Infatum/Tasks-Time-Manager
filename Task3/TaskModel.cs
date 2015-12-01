@@ -24,8 +24,6 @@ namespace Task3
         int _id;
         private int _time = 0;
         private string _name = null;
-        bool _timerIsActive = false;
-        TaskInfo _task;
         TaskInfoContext _taskEntities;
         DispatcherTimer _timer;
 
@@ -48,10 +46,12 @@ namespace Task3
                 NotifyPropertyChanged("TaskTimerText");
             }
         }
+
         public int ModelTaskID { get { return _id; } }
+
         public string TaskTimerText
         {
-            get { return ShowTime(); }
+            get { return ShowTime(_time); }
         }
 
         public string Name
@@ -74,7 +74,6 @@ namespace Task3
             {
                 _name = value;
             }
-
         }
 
         public void NotifyPropertyChanged(string propName)
@@ -83,15 +82,13 @@ namespace Task3
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
 
-
-
         /// <summary>
         /// The  timer performance
         /// </summary>
         /// <returns></returns>
-        public string ShowTime()
+        public static string ShowTime(int time)
         {
-            return $"Logged {_time / 3600}:{this._time % 3600 / 60}:{this._time % 60}";
+            return $"Logged {time / 3600}:{time % 3600 / 60}:{time % 60}";
         }
 
         /// <summary>
@@ -116,6 +113,11 @@ namespace Task3
             _taskEntities = new TaskInfoContext();
         }
 
+        public TaskInfoContext DBContext { get { return _taskEntities; } }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void EndSession()
         {
             using (_taskEntities)
@@ -123,10 +125,14 @@ namespace Task3
                 UpdateSession(_id, Time, Name);
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void LoadSession()
         {
-            TaskInfoContext taskContext = new TaskInfoContext();
-            if (taskContext.TaskDataEntities.Count() != 0)
+            CreateDB();
+            if (_taskEntities.TaskDataEntities.Count() > 0)
             {
                 _taskEntities.TaskDataEntities.Load();
             }
@@ -140,13 +146,6 @@ namespace Task3
         {
             _taskEntities.TaskDataEntities.Add(new TaskInfo() { Name = name, TrackedTime = time, TaskBoxID = _id });
             _taskEntities.SaveChanges();
-            var list = _taskEntities.TaskDataEntities.ToList();
-            var tmp_message = "";
-            foreach (var item in list)
-            {
-                tmp_message += $"ID:{item.TaskBoxID} Time:${item.TrackedTime} Name:{item.Name}\n";
-            }
-            MessageBox.Show(tmp_message);
         }
 
         /// <summary>

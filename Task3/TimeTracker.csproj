@@ -86,7 +86,7 @@
       <DependentUpon>201511272033278_AddTaskInfoTaskBoxID.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Model.cs" />
+    <Compile Include="TaskModel.cs" />
     <Compile Include="TaskBox.xaml.cs">
       <DependentUpon>TaskBox.xaml</DependentUpon>
     </Compile>

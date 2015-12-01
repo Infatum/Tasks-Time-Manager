@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Linq;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 
@@ -15,6 +16,7 @@ namespace Task3
         public TaskBox tb = null;
         private bool timerIsActive;
         static int taskCounter = 0;
+        private TaskModel _model;
         //private TaskViewModel presenter = null;
 
         public static int TaskID { get { return taskCounter; } }
@@ -25,7 +27,10 @@ namespace Task3
 
             timerIsActive = false;
             tasks = new ObservableCollection<TaskBox>();
+            _model = new TaskModel();
+            _model.LoadSession();
             InitializeComponent();
+            LoadTaskSessions();
 
         }
 
@@ -33,6 +38,23 @@ namespace Task3
         //{
         //    get { return presenter; }
         //}
+        private void LoadTaskSessions()
+        {
+            using (TaskInfoContext db = new TaskInfoContext())
+            {
+                var savedSessions = db.TaskDataEntities.ToList();
+                foreach (TaskInfo session in savedSessions)
+                {
+                    tb = new TaskBox(session.TaskBoxID);
+                    tb.ID = session.TaskBoxID;
+                    tasks.Add(tb);
+                    tasksStackPanel.Children.Add(tb);
+                    tb.textBoxTask.Text = session.Name;
+                    tb.textBlock.Text = TaskModel.ShowTime(session.TrackedTime);
+
+                }
+            }           
+        }
 
         private void btnAddTimer_Click(object sender, RoutedEventArgs e)
         {
