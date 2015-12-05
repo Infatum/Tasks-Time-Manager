@@ -21,7 +21,7 @@ namespace Task3
 {
     public class TaskModel : INotifyPropertyChanged
     {
-        int _id;
+        int _taskID;
         private int _time = 0;
         private string _name = null;
         TaskInfoContext _taskEntities;
@@ -30,11 +30,20 @@ namespace Task3
         public event PropertyChangedEventHandler PropertyChanged;
 
         public TaskModel() { }
-        public TaskModel(int id)
+        public TaskModel(int taskBoxID)
         {
-            _id = id;
+            _taskID = taskBoxID;
             _timer = new DispatcherTimer();
             _timer.Interval = new TimeSpan(0, 0, 1);
+        }
+
+        public TaskModel(int taskID, int logged, string title)
+        {
+            _taskID = taskID;
+            _timer = new DispatcherTimer();
+            _timer.Interval = new TimeSpan(0, 0, 1);
+            Time = logged;
+            Name = title;
         }
 
         public int Time
@@ -47,7 +56,7 @@ namespace Task3
             }
         }
 
-        public int ModelTaskID { get { return _id; } }
+        public int ModelTaskID { get { return _taskID; } }
 
         public string TaskTimerText
         {
@@ -104,9 +113,10 @@ namespace Task3
                 UpdateSession(ModelTaskID, Time, TaskNameText);
             }
         }
+
         public int GetID()
         {
-            return _id;
+            return _taskID;
         }
         public void CreateDB()
         {
@@ -122,7 +132,7 @@ namespace Task3
         {
             using (_taskEntities)
             {
-                UpdateSession(_id, Time, Name);
+                UpdateSession(_taskID, Time, Name);
             }
         }
 
@@ -137,6 +147,7 @@ namespace Task3
                 _taskEntities.TaskDataEntities.Load();
             }
         }
+
         /// <summary>
         /// Edds a new task session to the DB
         /// </summary>
@@ -144,12 +155,12 @@ namespace Task3
         /// <param name="name"></param>
         public void AddSession(int time, string name)
         {
-            _taskEntities.TaskDataEntities.Add(new TaskInfo() { Name = name, TrackedTime = time, TaskBoxID = _id });
+            _taskEntities.TaskDataEntities.Add(new TaskInfo() { Name = name, TrackedTime = time, TaskBoxID = _taskID });
             _taskEntities.SaveChanges();
         }
 
         /// <summary>
-        /// Edits current task session in DB
+        /// Writing task session changes to DB
         /// </summary>
         /// <param name="id"></param>
         /// <param name="time"></param>
@@ -163,11 +174,9 @@ namespace Task3
                 MessageBox.Show("ERROR: Task not found in DB. Skip savig...");
                 return;
             }
-
-            task.Name = name;
-            task.TrackedTime = time;
-
-            _taskEntities.SaveChanges();
+                task.Name = name;
+                task.TrackedTime = time;
+                _taskEntities.SaveChanges();
         }
 
         /// <summary>

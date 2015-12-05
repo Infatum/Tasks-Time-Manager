@@ -25,11 +25,8 @@ namespace Task3
     public partial class TaskBox : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        DispatcherTimer _timer;
         TaskModel _model;
-        //TaskViewModel p;
         bool _timerIsActive;
-        string _title;
 
         public TaskBox(int taskID)
         {
@@ -38,6 +35,19 @@ namespace Task3
             this._model = new TaskModel(taskID);
             _model.CreateDB();
             this.DataContext = this._model;
+        }
+
+        public TaskBox(int taskID, int logged, string name)
+        {
+            InitializeComponent();
+            textBlock.Tag = ID;
+            this._model = new TaskModel(taskID, logged, name);
+            _model.CreateDB();
+            this.DataContext = this._model;
+            if (_model.DBContext.TaskDataEntities.Count() > 0)
+            {
+                btnTimer.Content = "Resume";
+            }
         }
 
         public int ID { get; set; }
