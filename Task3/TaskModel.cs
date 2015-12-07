@@ -1,21 +1,10 @@
 ﻿using System;
-using System.Windows.Controls;
 using System.Windows;
-using System.Collections.Generic;
-using System.Data.SQLite;
-using System.Linq.Expressions;
-using System.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Windows.Threading;
 using System.ComponentModel;
 using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Text;
-using System.Data.Objects;
-using System.Globalization;
-using System.Data.EntityClient;
-using System.Data.Common;
 
 namespace Task3
 {
@@ -97,7 +86,7 @@ namespace Task3
         /// <returns></returns>
         public static string ShowTime(int time)
         {
-            return $"Logged {time / 3600}:{time % 3600 / 60}:{time % 60}";
+            return $"Logged: {time / 3600}:{time % 3600 / 60}:{time % 60}";
         }
 
         /// <summary>
