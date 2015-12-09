@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using SqlServerTypes;
+using Microsoft.Win32;
 
 namespace Task3
 {
@@ -65,12 +65,31 @@ namespace Task3
 
         private void btnAddGenerateTextReport_Click(object sender, RoutedEventArgs e)
         {
-            RenderPDF();
+            SavePDFDocument(SaveFileDialog());
         }
 
-        public void RenderPDF()
+        public string SaveFileDialog()
         {
-            FileStream fs = new FileStream("report.pdf", FileMode.Create);
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = "Report"; //Default file name
+            dlg.DefaultExt = ".pdf"; //Default file extansion
+            dlg.Filter = "PDF documents (.pdf)|.*pdf"; //Filter files by extansion
+            string filename = "Report";
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                 filename = dlg.FileName;
+            }
+            return filename;
+        }
+
+        public void SavePDFDocument(string name)
+        {
+            FileStream fs = new FileStream(name, FileMode.Create);
             Document document = new Document(PageSize.A4, 25, 25, 30, 30);
             PdfWriter writer = PdfWriter.GetInstance(document, fs);
             int taskCount = 1;
@@ -105,7 +124,7 @@ namespace Task3
 
             foreach (var taskInfo in _db.TaskDataEntities)
             {
-                string trakedTime = $"{ taskInfo.TrackedTime / 3600 }h{ taskInfo.TrackedTime % 3600 / 60}m{ taskInfo.TrackedTime % 60}s";
+                string trakedTime = $"{ taskInfo.TrackedTime / 3600 }h { taskInfo.TrackedTime % 3600 / 60}m { taskInfo.TrackedTime % 60}s";
                 table.AddCell(taskCount.ToString());
                 table.AddCell(taskInfo.Name);
                 table.AddCell(trakedTime);
