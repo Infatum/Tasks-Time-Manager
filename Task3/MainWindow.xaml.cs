@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Linq;
-using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.IO;
 using iTextSharp.text;
@@ -36,20 +34,34 @@ namespace Task3
 
         private int getMaxTaskID()
         {
-            var sql = "SELECT MAX(TaskBoxID) FROM TASKINFOES;";
-            return _db.Database.SqlQuery<int>(sql).FirstOrDefault<int>();
+            try
+            {
+                return _db.Database.SqlQuery<int>("SELECT MAX(TaskBoxID) FROM TASKINFOES;").FirstOrDefault<int>();
+            }
+            catch(System.InvalidOperationException e)
+            {
+                return 0;
+            }
         }
 
         private void LoadTaskSessions()
         {
             using (TaskInfoContext db = new TaskInfoContext())
             {
-                var savedSessions = db.TaskDataEntities.ToList();
-                foreach (TaskInfo session in savedSessions)
+                try
                 {
-                    tb = new TaskBox(session.TaskBoxID, session.TrackedTime, session.Name);
-                    tasks.Add(tb);
-                    tasksStackPanel.Children.Add(tb);
+                    var savedSessions = db.TaskDataEntities.ToList();
+                    foreach (TaskInfo session in savedSessions)
+                    {
+                        tb = new TaskBox(session.TaskBoxID, session.TrackedTime, session.Name);
+                        tasks.Add(tb);
+                        tasksStackPanel.Children.Add(tb);
+                    }
+                }
+                catch(System.Data.DataException e)
+                {
+                    db.Database.Delete();
+                    db.Database.Create();
                 }
             }
         }

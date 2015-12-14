@@ -6,14 +6,14 @@ namespace Task3.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.0.0-20911")]
-    public sealed partial class AddTaskInfoTaskBoxID : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
+    public sealed partial class InitialCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddTaskInfoTaskBoxID));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "201511272033278_AddTaskInfoTaskBoxID"; }
+            get { return "201512132026590_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

@@ -10,6 +10,7 @@ namespace Task3.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            ContextKey = "Task3.TaskInfoContext";
         }
 
         protected override void Seed(Task3.TaskInfoContext context)

@@ -1,8 +1,9 @@
+using System;
+using System.Data.Entity;
+using System.Linq;
+
 namespace Task3
 {
-    using System;
-    using System.Data.Entity;
-    using System.Linq;
 
     public class TaskInfoContext : DbContext
     {
@@ -13,7 +14,8 @@ namespace Task3
         // If you wish to target a different database and/or database provider, modify the 'TaskInfoData' 
         // connection string in the application configuration file.
         public TaskInfoContext()
-            : base("name=TaskInfoData")
+            : base("TaskInfo.TaskInfoContext")
+            //base("name=TaskData")
         {
         }
 
