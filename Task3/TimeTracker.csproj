@@ -71,18 +71,32 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="IStorage.cs" />
     <Compile Include="Migrations\201512132026590_InitialCreate.cs" />
     <Compile Include="Migrations\201512132026590_InitialCreate.Designer.cs">
       <DependentUpon>201512132026590_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601091407110_AddProjectDescriptions.cs" />
+    <Compile Include="Migrations\201601091407110_AddProjectDescriptions.Designer.cs">
+      <DependentUpon>201601091407110_AddProjectDescriptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ProjectDescriptionModel.cs" />
+    <Compile Include="ProjectDescriptions.cs" />
+    <Compile Include="Projects.xaml.cs">
+      <DependentUpon>Projects.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TaskModel.cs" />
     <Compile Include="TaskBox.xaml.cs">
       <DependentUpon>TaskBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="TaskInfo.cs" />
     <Compile Include="TaskInfoContext.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="Projects.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProjectTasks.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -90,8 +104,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="ProjectTasks.xaml.cs">
+      <DependentUpon>ProjectTasks.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="TaskBox.xaml">
@@ -116,6 +130,9 @@
     </Compile>
     <EmbeddedResource Include="Migrations\201512132026590_InitialCreate.resx">
       <DependentUpon>201512132026590_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601091407110_AddProjectDescriptions.resx">
+      <DependentUpon>201601091407110_AddProjectDescriptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

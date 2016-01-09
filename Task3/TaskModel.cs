@@ -5,17 +5,17 @@ using System.Linq;
 using System.Windows.Threading;
 using System.ComponentModel;
 using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace Task3
 {
-    public class TaskModel : INotifyPropertyChanged
+    public class TaskModel : INotifyPropertyChanged, IRepository<TaskInfo>
     {
         int _taskID;
         private int _time = 0;
         private string _name = null;
-        TaskInfoContext _taskEntities;
+        ProjectInfoContext _taskEntities;
         DispatcherTimer _timer;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public TaskModel() { }
@@ -47,6 +47,15 @@ namespace Task3
 
         public int ModelTaskID { get { return _taskID; } }
 
+        public TaskInfo CurrenntTaskEntity
+        {
+            get
+            {
+                var task = GetById(_taskID);
+                return task;
+            }
+        }
+
         public string TaskTimerText
         {
             get { return ShowTime(_time); }
@@ -58,7 +67,7 @@ namespace Task3
             set
             {
                 _name = value;
-                NotifyPropertyChanged("TaskNameText"); 
+                NotifyPropertyChanged("TaskNameText");
             }
         }
 
@@ -99,7 +108,7 @@ namespace Task3
             Time++;
             if (Time != 0 && Time % 3 == 0)
             {
-                UpdateSession(ModelTaskID, Time, TaskNameText);
+                UpdateSession(CurrenntTaskEntity);
             }
         }
 
@@ -109,10 +118,19 @@ namespace Task3
         }
         public void CreateDB()
         {
-            _taskEntities = new TaskInfoContext();
+            _taskEntities = new ProjectInfoContext();
         }
 
-        public TaskInfoContext DBContext { get { return _taskEntities; } }
+        public ProjectInfoContext DBContext { get { return _taskEntities; } }
+
+        public ICollection<TaskInfo> LoadSession()
+        {
+            using (var context = new ProjectInfoContext())
+            {
+                var tasks = context.TaskDataEntities.ToList();
+                return tasks;
+            }
+        }
 
         /// <summary>
         /// 
@@ -121,32 +139,20 @@ namespace Task3
         {
             using (_taskEntities)
             {
-                UpdateSession(_taskID, Time, Name);
+                UpdateSession(CurrenntTaskEntity);
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public void LoadSession()
-        {
-            CreateDB();
-            if (_taskEntities.TaskDataEntities.Count() > 0)
-            {
-                _taskEntities.TaskDataEntities.Load();
-            }
-        }
-
-        /// <summary>
-        /// Edds a new task session to the DB
-        /// </summary>
-        /// <param name="time"></param>
-        /// <param name="name"></param>
-        public void AddSession(int time, string name)
-        {
-            _taskEntities.TaskDataEntities.Add(new TaskInfo() { Name = name, TrackedTime = time, TaskBoxID = _taskID });
-            _taskEntities.SaveChanges();
-        }
+        ///// <summary>
+        ///// Edds a new task session to the DB
+        ///// </summary>
+        ///// <param name="time"></param>
+        ///// <param name="name"></param>
+        //public void AddSession(int time, string name)
+        //{
+        //    _taskEntities.TaskDataEntities.Add(new TaskInfo() { Name = name, TrackedTime = time, TaskBoxID = _taskID });
+        //    _taskEntities.SaveChanges();
+        //}
 
         /// <summary>
         /// Writing task session changes to DB
@@ -154,18 +160,16 @@ namespace Task3
         /// <param name="id"></param>
         /// <param name="time"></param>
         /// <param name="name"></param>
-        public void UpdateSession(int id, int time, string name)
+        public void UpdateSession(TaskInfo entity)
         {
-            var task = (from t in _taskEntities.TaskDataEntities where t.TaskBoxID == id select t).First();
-
-            if (task == null)
+            if (GetById(_taskID) != null)
             {
                 MessageBox.Show("ERROR: Task not found in DB. Skip savig...");
                 return;
             }
-                task.Name = name;
-                task.TrackedTime = time;
-                _taskEntities.SaveChanges();
+            entity.Name = Name;
+            entity.TrackedTime = Time;
+            _taskEntities.SaveChanges();
         }
 
         /// <summary>
@@ -184,6 +188,23 @@ namespace Task3
         {
             _timer.Tick -= Timer_Tick;
             _timer.Stop();
+        }
+
+        public TaskInfo GetById(int id)
+        {
+            var task = (from t in _taskEntities.TaskDataEntities where t.TaskBoxID == id select t).First();
+            return task;
+        }
+
+        public void InsertSession(TaskInfo entity)
+        {
+            _taskEntities.TaskDataEntities.Add(entity);
+            _taskEntities.SaveChanges();
+        }
+
+        public void DeleteSession(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

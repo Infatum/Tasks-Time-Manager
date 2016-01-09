@@ -33,7 +33,7 @@ namespace Task3
             InitializeComponent();
             textBlock.Tag = ID;
             this._model = new TaskModel(taskID);
-            _model.CreateDB();
+            //_model.CreateDB();
             this.DataContext = this._model;
         }
 
@@ -42,7 +42,7 @@ namespace Task3
             InitializeComponent();
             textBlock.Tag = ID;
             this._model = new TaskModel(taskID, logged, name);
-            _model.CreateDB();
+            //_model.CreateDB();
             this.DataContext = this._model;
             if (_model.DBContext.TaskDataEntities.Count() > 0)
             {
@@ -81,7 +81,7 @@ namespace Task3
             {
                 if (b.Content.ToString() == "Start")
                 {
-                    _model.AddSession(_model.Time,textBoxTask.Text);
+                    _model.InsertSession(new TaskInfo { TaskBoxID = this.ID });
                 }
                 _model.StartResumeTimer();
                 b.Content = "Pause";

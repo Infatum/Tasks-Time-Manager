@@ -14,23 +14,33 @@ namespace Task3
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ProjectTasks : Window
     {
-        ObservableCollection<TaskBox> tasks;
+        ObservableCollection<TaskBox> _tasks;
         public TaskBox tb = null;
         static int taskCounter = 0;
-        TaskInfoContext _db;
+        ProjectInfoContext _db;
+        ProjectDescription _currentProject;
 
         public static int TaskID { get { return taskCounter; } }
 
-        public MainWindow()
+        public ProjectTasks()
         {
-            tasks = new ObservableCollection<TaskBox>();
+            _tasks = new ObservableCollection<TaskBox>();
             InitializeComponent();
             LoadTaskSessions();
-            _db = new TaskInfoContext();
+            _db = new ProjectInfoContext();
             taskCounter = getMaxTaskID() + 1;
+            _currentProject = new ProjectDescription();
         }
+        //public ProjectTasks(string name)
+        //{
+        //    tasks = new ObservableCollection<TaskBox>();
+        //    InitializeComponent();
+        //    LoadTaskSessions();
+        //    _db = new ProjectInfoContext();
+        //    taskCounter = getMaxTaskID() + 1;
+        //}
 
         private int getMaxTaskID()
         {
@@ -46,7 +56,7 @@ namespace Task3
 
         private void LoadTaskSessions()
         {
-            using (TaskInfoContext db = new TaskInfoContext())
+            using (ProjectInfoContext db = new ProjectInfoContext())
             {
                 try
                 {
@@ -54,7 +64,7 @@ namespace Task3
                     foreach (TaskInfo session in savedSessions)
                     {
                         tb = new TaskBox(session.TaskBoxID, session.TrackedTime, session.Name);
-                        tasks.Add(tb);
+                        _tasks.Add(tb);
                         tasksStackPanel.Children.Add(tb);
                     }
                 }
@@ -70,7 +80,7 @@ namespace Task3
         {
             tb = new TaskBox(taskCounter);
             tb.ID = taskCounter;
-            tasks.Add(tb);
+            _tasks.Add(tb);
             tasksStackPanel.Children.Add(tb);
             taskCounter++;
         }
@@ -80,6 +90,10 @@ namespace Task3
             SavePDFDocument(SaveFileDialog());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>PDF file name</returns>
         public string SaveFileDialog()
         {
             SaveFileDialog dlg = new SaveFileDialog();
@@ -99,6 +113,10 @@ namespace Task3
             return filename;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
         public void SavePDFDocument(string name)
         {
             FileStream fs = new FileStream(name, FileMode.Create);
@@ -150,5 +168,11 @@ namespace Task3
             fs.Close();
 
         }
+
+        //private void ChangingProjectName(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        //{
+        //    _currentProject.ProjectName = 
+
+        //}
     }
 }
