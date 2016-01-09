@@ -71,6 +71,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddNewProject.xaml.cs">
+      <DependentUpon>AddNewProject.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IStorage.cs" />
     <Compile Include="Migrations\201512132026590_InitialCreate.cs" />
     <Compile Include="Migrations\201512132026590_InitialCreate.Designer.cs">
@@ -79,6 +82,10 @@
     <Compile Include="Migrations\201601091407110_AddProjectDescriptions.cs" />
     <Compile Include="Migrations\201601091407110_AddProjectDescriptions.Designer.cs">
       <DependentUpon>201601091407110_AddProjectDescriptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601092013466_AddPropProjectDescriptionText.cs" />
+    <Compile Include="Migrations\201601092013466_AddPropProjectDescriptionText.Designer.cs">
+      <DependentUpon>201601092013466_AddPropProjectDescriptionText.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProjectDescriptionModel.cs" />
@@ -92,6 +99,10 @@
     </Compile>
     <Compile Include="TaskInfo.cs" />
     <Compile Include="TaskInfoContext.cs" />
+    <Page Include="AddNewProject.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Projects.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -133,6 +144,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601091407110_AddProjectDescriptions.resx">
       <DependentUpon>201601091407110_AddProjectDescriptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601092013466_AddPropProjectDescriptionText.resx">
+      <DependentUpon>201601092013466_AddPropProjectDescriptionText.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

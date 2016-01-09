@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -25,9 +27,13 @@ namespace Task3
         ProjectInfoContext _db;
         ProjectDescription _currentProject;
         ProjectTasks _projectUI;
+        AddNewProject _newProjectWindow;
+        Dictionary<string, string> _projectNameAndDescription;
+        
         public Projects()
         {
             _projects = new ObservableCollection<ProjectTasks>();
+            _projectNameAndDescription = new Dictionary<string, string>();
             //_projectUI = new ProjectTasks();
             InitializeComponent();
         }
@@ -35,6 +41,8 @@ namespace Task3
         private void btnNewProject_Click(object sender, RoutedEventArgs e)
         {
             _currentProject = new ProjectDescription();
+            _newProjectWindow = new AddNewProject();
+            _newProjectWindow.Show();
             listViewProjectsNamesAndDescriptions.Items.Add(_currentProject);
         }
     }

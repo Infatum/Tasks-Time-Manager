@@ -17,6 +17,7 @@ namespace Task3
         [Key]
         public int ProjectId { get; set; }
         public string ProjectName { get; set; }
+        public string ProjectDescriptionText { get; set; }
         public ICollection<TaskInfo> ProjectTasks { get; set; }
     }
 }
