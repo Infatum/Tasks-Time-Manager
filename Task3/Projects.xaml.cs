@@ -27,15 +27,15 @@ namespace Task3
         ProjectTasks _projectUI;
         public Projects()
         {
-            InitializeComponent();
             _projects = new ObservableCollection<ProjectTasks>();
-            _projectUI = new ProjectTasks();
+            //_projectUI = new ProjectTasks();
+            InitializeComponent();
         }
 
         private void btnNewProject_Click(object sender, RoutedEventArgs e)
         {
-            _projects.Add(_projectUI);
-            stcPanelProjects.Children.Add(new ProjectTasks());
+            _currentProject = new ProjectDescription();
+            listViewProjectsNamesAndDescriptions.Items.Add(_currentProject);
         }
     }
 }

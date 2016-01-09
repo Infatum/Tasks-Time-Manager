@@ -6,6 +6,7 @@ using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.Win32;
+using System.Windows.Controls;
 
 namespace Task3
 {
@@ -33,14 +34,14 @@ namespace Task3
             taskCounter = getMaxTaskID() + 1;
             _currentProject = new ProjectDescription();
         }
-        //public ProjectTasks(string name)
-        //{
-        //    tasks = new ObservableCollection<TaskBox>();
-        //    InitializeComponent();
-        //    LoadTaskSessions();
-        //    _db = new ProjectInfoContext();
-        //    taskCounter = getMaxTaskID() + 1;
-        //}
+        public ProjectTasks(string name)
+        {
+            _tasks = new ObservableCollection<TaskBox>();
+            InitializeComponent();
+            LoadTaskSessions();
+            _db = new ProjectInfoContext();
+            taskCounter = getMaxTaskID() + 1;
+        }
 
         private int getMaxTaskID()
         {
@@ -48,7 +49,7 @@ namespace Task3
             {
                 return _db.Database.SqlQuery<int>("SELECT MAX(TaskBoxID) FROM TASKINFOES;").FirstOrDefault<int>();
             }
-            catch(System.InvalidOperationException e)
+            catch (System.InvalidOperationException e)
             {
                 return 0;
             }
@@ -58,21 +59,21 @@ namespace Task3
         {
             using (ProjectInfoContext db = new ProjectInfoContext())
             {
-                try
+                //try
+                //{
+                var savedSessions = db.TaskDataEntities.ToList();
+                foreach (TaskInfo session in savedSessions)
                 {
-                    var savedSessions = db.TaskDataEntities.ToList();
-                    foreach (TaskInfo session in savedSessions)
-                    {
-                        tb = new TaskBox(session.TaskBoxID, session.TrackedTime, session.Name);
-                        _tasks.Add(tb);
-                        tasksStackPanel.Children.Add(tb);
-                    }
+                    tb = new TaskBox(session.TaskBoxID, session.TrackedTime, session.Name);
+                    _tasks.Add(tb);
+                    tasksStackPanel.Children.Add(tb);
                 }
-                catch(System.Data.DataException e)
-                {
-                    db.Database.Delete();
-                    db.Database.Create();
-                }
+                //}
+                //catch(Exception e)
+                //{
+                //    //db.Database.Delete();
+                //    //db.Database.Create();
+                //}
             }
         }
 
@@ -108,7 +109,7 @@ namespace Task3
             if (result == true)
             {
                 // Save document
-                 filename = dlg.FileName;
+                filename = dlg.FileName;
             }
             return filename;
         }

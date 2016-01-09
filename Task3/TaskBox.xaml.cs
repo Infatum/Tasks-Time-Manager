@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.ComponentModel;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 
 
 namespace Task3
@@ -42,11 +31,15 @@ namespace Task3
             InitializeComponent();
             textBlock.Tag = ID;
             this._model = new TaskModel(taskID, logged, name);
-            //_model.CreateDB();
+            _model.CreateDB();
             this.DataContext = this._model;
             if (_model.DBContext.TaskDataEntities.Count() > 0)
             {
                 btnTimer.Content = "Resume";
+            }
+            else
+            {
+                btnTimer.Content = "Start";
             }
         }
 
