@@ -28,22 +28,24 @@ namespace Task3
         ProjectDescription _currentProject;
         ProjectTasks _projectUI;
         AddNewProject _newProjectWindow;
-        Dictionary<string, string> _projectNameAndDescription;
         
         public Projects()
         {
             _projects = new ObservableCollection<ProjectTasks>();
-            _projectNameAndDescription = new Dictionary<string, string>();
+            //_projectNameAndDescription = new Dictionary<string, string>();
             //_projectUI = new ProjectTasks();
             InitializeComponent();
         }
-
+        public void AddingToNameAndDescriptionList(Dictionary<string, string> projectNameDescr)
+        {
+            listViewProjectsNamesAndDescriptions.ItemsSource = projectNameDescr;
+            //MessageBox.Show(projectNameDescr[_newProjectWindow.Name]);
+        }
         private void btnNewProject_Click(object sender, RoutedEventArgs e)
         {
             _currentProject = new ProjectDescription();
             _newProjectWindow = new AddNewProject();
             _newProjectWindow.Show();
-            listViewProjectsNamesAndDescriptions.Items.Add(_currentProject);
         }
     }
 }

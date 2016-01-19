@@ -15,7 +15,8 @@
         <ListView x:Name="listViewProjectsNamesAndDescriptions" HorizontalAlignment="Left" Height="142" VerticalAlignment="Top" Width="377" Margin="10,118,0,0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Header="Name" Width="160" DisplayMemberBinding="{Binding Path=Name}"/>
+                    <GridViewColumn Header="Description" Width="200" DisplayMemberBinding="{Binding Path=Description}"/>
                 </GridView>
             </ListView.View>
         </ListView>

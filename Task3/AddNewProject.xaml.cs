@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.ComponentModel;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Task3
 {
@@ -23,11 +12,14 @@ namespace Task3
         ProjectDescription _currentProject;
         string _name;
         string _description;
+        Projects _projectsUI;
+        Dictionary<string, string> _projectNameAndDescription;
         public event PropertyChangedEventHandler PropertyChanged;
         public AddNewProject()
         {
             InitializeComponent();
             _currentProject = new ProjectDescription();
+            _projectNameAndDescription = new Dictionary<string, string>();
             this.DataContext = this;
         }
         public string ProjectNameText { get { return _name; } set { _name = value; } }
@@ -50,16 +42,31 @@ namespace Task3
                 NotifyPropertyChanged("ProjectDescriptionText");
             }
         }
-
         public void NotifyPropertyChanged(string propName)
         {
-            if (this.PropertyChanged != null) // Check if no interface? do nothing
+            if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
 
-        private void btnOk_Click(object sender, RoutedEventArgs e)
+        private void btnAddProject_Click(object sender, RoutedEventArgs e)
         {
-            //_currentProject = new ProjectDescription { ProjectName = Name,  }
+            if (Name == null) // FIXME: Show message on form (window)
+            {
+                MessageBox.Show("Fill in Name field");
+                return;
+            }
+            if (Description == null) // Empty description
+                Description = "";
+            _currentProject = new ProjectDescription { ProjectName = Name, ProjectDescriptionText = Description };
+            _projectsUI = new Projects();
+            _projectNameAndDescription.Add(Name, Description);
+            _projectsUI.AddingToNameAndDescriptionList(_projectNameAndDescription);
+            this.Close();
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
