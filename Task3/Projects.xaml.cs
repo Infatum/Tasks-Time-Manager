@@ -23,29 +23,49 @@ namespace Task3
     /// </summary>
     public partial class Projects : Window
     {
-        ObservableCollection<ProjectTasks> _projects;
-        ProjectInfoContext _db;
+        ObservableCollection<ProjectDescription> _projects;
         ProjectDescription _currentProject;
-        ProjectTasks _projectUI;
         AddNewProject _newProjectWindow;
-        
+        List<ProjectDescription> _projectsList;
+
+        public ObservableCollection<ProjectDescription> ProjectsListDataSource { get { return _projects; } }
         public Projects()
         {
-            _projects = new ObservableCollection<ProjectTasks>();
+            _projects = new ObservableCollection<ProjectDescription>();
+            _projectsList = new List<ProjectDescription>();
             //_projectNameAndDescription = new Dictionary<string, string>();
             //_projectUI = new ProjectTasks();
             InitializeComponent();
         }
-        public void AddingToNameAndDescriptionList(Dictionary<string, string> projectNameDescr)
+
+        public List<ProjectDescription> ListOfProjects
         {
-            listViewProjectsNamesAndDescriptions.ItemsSource = projectNameDescr;
-            //MessageBox.Show(projectNameDescr[_newProjectWindow.Name]);
+            get { return _projectsList; }
+        }
+        public void AddingToNameAndDescriptionList(List<ProjectDescription> projects)
+        {
+            foreach (var item in projects)
+            {
+                MessageBox.Show(item.ProjectName + " " + item.ProjectDescriptionText);
+            }
+            listViewProjectsNamesAndDescriptions.ItemsSource = null;
+            listViewProjectsNamesAndDescriptions.ItemsSource = projects;
+        }
+
+        private void OnLoad()
+        {
+
         }
         private void btnNewProject_Click(object sender, RoutedEventArgs e)
         {
             _currentProject = new ProjectDescription();
             _newProjectWindow = new AddNewProject();
             _newProjectWindow.Show();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

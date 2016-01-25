@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Task3"
         mc:Ignorable="d"
         Title="Projects" Height="300" Width="404.887">
+
     <Grid>
         <Separator HorizontalAlignment="Left" Height="9" Margin="0,32,0,0" VerticalAlignment="Top" Width="397"/>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,4,0,0" FontSize="20" TextWrapping="Wrap" Text="Projects List:" VerticalAlignment="Top" Height="28" Width="293"/>
@@ -15,8 +16,8 @@
         <ListView x:Name="listViewProjectsNamesAndDescriptions" HorizontalAlignment="Left" Height="142" VerticalAlignment="Top" Width="377" Margin="10,118,0,0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="160" DisplayMemberBinding="{Binding Path=Name}"/>
-                    <GridViewColumn Header="Description" Width="200" DisplayMemberBinding="{Binding Path=Description}"/>
+                    <GridViewColumn Header="Name" Width="160" DisplayMemberBinding="{Binding Path=ProjectName}"/>
+                    <GridViewColumn Header="Description" Width="200" DisplayMemberBinding="{Binding Path=ProjectDescriptionText}"/>
                 </GridView>
             </ListView.View>
         </ListView>

@@ -9,14 +9,14 @@
     <Grid Margin="0,0,0,5">
         <Label x:Name="labelProjectName" Content="Project Name: " VerticalAlignment="Top" Margin="10,5,12,0" Height="25"/>
         <Label x:Name="labelProjectDescription" Content="Project Description: " VerticalAlignment="Top" Margin="10,58,12,0" Height="25"/>
-        <RichTextBox x:Name="richTextBox" Margin="10,83,10,34">
+        <RichTextBox x:Name="projectDescriptionTb" Margin="10,83,10,34">
             <FlowDocument>
                 <Paragraph>
                     <Run Text="{Binding Path=ProjectDescriptionText}"/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <TextBox x:Name="textBox" Height="23" Text="{Binding Path=ProjectNameText, Mode=TwoWay}" Margin="10,30,12,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxName" Height="23" Text="{Binding Path=ProjectNameText, Mode=TwoWay}" Margin="10,30,12,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <Button x:Name="btnAddProject" Content="Add Project" Margin="0,0,74,7" Height="22" VerticalAlignment="Bottom" Click="btnAddProject_Click" HorizontalAlignment="Right" Width="102"/>
         <Button x:Name="btnCancel" Content="Cancel" Margin="0,0,10,7" Height="22" VerticalAlignment="Bottom" Click="btnCancel_Click" HorizontalAlignment="Right" Width="59"/>
 
