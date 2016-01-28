@@ -89,7 +89,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProjectDescriptionModel.cs" />
-    <Compile Include="ProjectDescriptions.cs" />
+    <Compile Include="ProjectDescription.cs" />
     <Compile Include="Projects.xaml.cs">
       <DependentUpon>Projects.xaml</DependentUpon>
     </Compile>

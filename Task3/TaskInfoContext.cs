@@ -8,7 +8,7 @@ namespace Task3
     public class ProjectInfoContext : DbContext
     {
         public ProjectInfoContext()
-            : base("TaskInfo.TaskInfoContext")
+            : base("TaskInfo.ProjectInfoContext")
             //base("name=TaskData")
         {
         }

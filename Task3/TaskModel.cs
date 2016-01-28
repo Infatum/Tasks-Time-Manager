@@ -143,17 +143,6 @@ namespace Task3
             }
         }
 
-        ///// <summary>
-        ///// Edds a new task session to the DB
-        ///// </summary>
-        ///// <param name="time"></param>
-        ///// <param name="name"></param>
-        //public void AddSession(int time, string name)
-        //{
-        //    _taskEntities.TaskDataEntities.Add(new TaskInfo() { Name = name, TrackedTime = time, TaskBoxID = _taskID });
-        //    _taskEntities.SaveChanges();
-        //}
-
         /// <summary>
         /// Writing task session changes to DB
         /// </summary>
@@ -202,9 +191,22 @@ namespace Task3
             _taskEntities.SaveChanges();
         }
 
+        /// <summary>
+        /// Deletes current Task, without deleting the project
+        /// </summary>
+        /// <param name="id"></param>
         public void DeleteSession(int id)
         {
-            throw new NotImplementedException();
+            using (ProjectInfoContext cntx = new ProjectInfoContext())
+            {
+                DbModelBuilder modelBuilder = new DbModelBuilder();
+                modelBuilder.Entity<TaskInfo>().HasRequired(x => x.Project)
+                    .WithMany(x => x.ProjectTasks).WillCascadeOnDelete(false);
+                var task = cntx.TaskDataEntities.Find(id);
+                cntx.TaskDataEntities.Remove(task);
+                cntx.SaveChanges();
+
+            }
         }
     }
 }

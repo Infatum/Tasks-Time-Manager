@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace Task3
 {
@@ -56,9 +60,24 @@ namespace Task3
                 return context.Projects.ToList();
             }
         }
+
+        /// <summary>
+        /// Deletes the Project with all Tasks in it
+        /// </summary>
+        /// <param name="id"></param>
         public void DeleteSession(int id)
         {
-            throw new NotImplementedException();
+            using (var cntx = new ProjectInfoContext())
+            {
+                DbModelBuilder modelbuilder = new DbModelBuilder();
+                modelbuilder.Entity<TaskInfo>().HasRequired(x => x.Project)
+                    .WithMany()
+                    .WillCascadeOnDelete(true);
+                var project = from p in cntx.Projects where p.ProjectId == id select p;
+                    cntx.Projects.Remove((ProjectDescription)project);
+                cntx.SaveChanges();
+            }
+            
         }
 
         public ProjectDescription GetById(int id)
