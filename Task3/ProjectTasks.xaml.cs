@@ -6,6 +6,7 @@ using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.Win32;
+using System.ComponentModel;
 using System.Windows.Controls;
 
 namespace Task3
@@ -21,6 +22,10 @@ namespace Task3
         static int taskCounter = 0;
         ProjectInfoContext _db;
         ProjectDescription _currentProject;
+        float _rate;
+        bool _freelancerMode;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public static int TaskID { get { return taskCounter; } }
 
@@ -32,6 +37,8 @@ namespace Task3
             _db = new ProjectInfoContext();
             taskCounter = getMaxTaskID() + 1;
             _currentProject = new ProjectDescription();
+            _freelancerMode = false;
+
         }
         public ProjectTasks(string name)
         {
@@ -40,6 +47,8 @@ namespace Task3
             LoadTaskSessions();
             _db = new ProjectInfoContext();
             taskCounter = getMaxTaskID() + 1;
+            _freelancerMode = false;
+          
         }
 
         private int getMaxTaskID()
@@ -62,6 +71,8 @@ namespace Task3
                 foreach (TaskInfo session in savedSessions)
                 {
                     tb = new TaskBox(session.TaskBoxID, session.TrackedTime, session.Name);
+                    //TODO FreelancerMode
+                    //tb.textBlockHorRate = 
                     _tasks.Add(tb);
                     tasksStackPanel.Children.Add(tb);
                 }
@@ -70,7 +81,15 @@ namespace Task3
 
         private void btnAddTimer_Click(object sender, RoutedEventArgs e)
         {
-            tb = new TaskBox(taskCounter);
+            if (_freelancerMode == true)
+            {
+                tb = new TaskBox(taskCounter, _rate);
+            }
+            else
+            {
+                tb = new TaskBox(taskCounter);
+            }
+           
             tb.ID = taskCounter;
             _tasks.Add(tb);
             tasksStackPanel.Children.Add(tb);
@@ -83,7 +102,7 @@ namespace Task3
         }
 
         /// <summary>
-        /// 
+        /// Saves pdf report in a choosen directory on users pc
         /// </summary>
         /// <returns>PDF file name</returns>
         public string SaveFileDialog()
@@ -158,6 +177,17 @@ namespace Task3
             writer.Close();
             fs.Close();
 
+        }
+
+        private void FrellancerModeOn(object sender, RoutedEventArgs e)
+        {
+            _freelancerMode = true;
+            tbProjectRate.IsEnabled = true;
+        }
+
+        private void RateChanged(object sender, TextChangedEventArgs e)
+        {
+            _rate = float.Parse(tbProjectRate.Text);
         }
     }
 }

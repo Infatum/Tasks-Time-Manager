@@ -6,15 +6,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Task3"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="280" MinWidth="320" Height="300" Width="350">
+        Title="MainWindow" MinHeight="280" MinWidth="320" Height="340" Width="350">
     <Grid x:Name="MainGrid" ShowGridLines="True" Margin="0,0,0,1">
         <Button x:Name="btnAddTimer" Content="Add Timer" FontSize="12" Background="LightGray" Foreground="Black" Margin="0,37,10,0" HorizontalAlignment="Right" Width="132" Height="21" VerticalAlignment="Top" Click="btnAddTimer_Click"/>
         <Button x:Name="btnAddGenerateTextReport" Content="Generate Text Report" FontSize="12" Background="White" Foreground="Black" Margin="200,7,0,0" HorizontalAlignment="Left" Width="135" Height="25" VerticalAlignment="Top" Click="btnAddGenerateTextReport_Click"/>
-        <ScrollViewer Margin="10,63,10,10" VerticalScrollBarVisibility="Auto">
-            <StackPanel x:Name="tasksStackPanel" ScrollViewer.HorizontalScrollBarVisibility="Visible" Height="196">
+        <ScrollViewer Margin="10,83,10,10" VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="tasksStackPanel" ScrollViewer.HorizontalScrollBarVisibility="Visible" Height="204">
             </StackPanel>
         </ScrollViewer>
         <Button x:Name="btnRemoveSelectedTask" Content="Remove Selected Task" FontSize="12" Background="LightGray" Foreground="Black" Margin="0,37,200,0" HorizontalAlignment="Right" Width="132" Height="21" VerticalAlignment="Top" Click="btnAddTimer_Click"/>
         <Button x:Name="btnProject" Content="Project" FontSize="12" Background="White" Foreground="Black" Margin="0,7,200,0" HorizontalAlignment="Right" Width="132" Height="25" VerticalAlignment="Top" Click="btnAddTimer_Click"/>
+        <CheckBox x:Name="checkBoxFreelancerMode" Content="Freellancer Mode" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top" Checked="FrellancerModeOn"/>
+        <TextBox x:Name="tbProjectRate" HorizontalAlignment="Left" IsEnabled="False" Height="17" Margin="200,61,0,0" Text="{Binding Path=TaskNameText}" TextWrapping="Wrap" VerticalAlignment="Top" Width="132"/>
     </Grid>
 </Window>

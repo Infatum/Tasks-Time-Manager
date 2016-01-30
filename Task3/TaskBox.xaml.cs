@@ -26,6 +26,19 @@ namespace Task3
             this.DataContext = this._model;
         }
 
+        /// <summary>
+        /// Creating a TaskBox item with enebled Freelancer Mode and hour rate
+        /// </summary>
+        /// <param name="taskID">№ of a taskbox item, ordered by ascending</param>
+        /// <param name="rate">Rate per hours(freelancer mode availeble only)</param>
+        public TaskBox(int taskID, float rate)
+        {
+            InitializeComponent();
+            textBlock.Tag = ID;
+            this._model = new TaskModel(taskID);
+            //_model.CreateDB();
+            this.DataContext = this._model;
+        } 
         public TaskBox(int taskID, int logged, string name)
         {
             InitializeComponent();
