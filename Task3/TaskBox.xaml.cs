@@ -43,6 +43,31 @@ namespace Task3
             }
         }
 
+        /// <summary>
+        /// Creating a TaskBox item with enebled Freelancer Mode and hour rate
+        /// </summary>
+        /// <param name="taskID">№ of a taskbox item, ordered by ascending</param>
+        /// <param name="logged">A raw representation of the logged time(without formatting)</param>
+        /// <param name="name">Name of task</param>
+        /// <param name="rate">Rate per hours(freelancer mode availeble only)</param>
+        public TaskBox(int taskID, int logged, string name, float rate)
+        {
+            InitializeComponent();
+            textBlock.Tag = ID;
+            this._model = new TaskModel(taskID, logged, name);
+            _model.CreateDB();
+            this.DataContext = this._model;
+            if (_model.DBContext.TaskDataEntities.Count() > 0)
+            {
+                btnTimer.Content = "Resume";
+            }
+            else
+            {
+                btnTimer.Content = "Start";
+            }
+            _model.HourRate = rate;
+           
+        }
         public int ID { get; set; }
 
         /// <summary>
@@ -54,12 +79,6 @@ namespace Task3
         {
             _model.Timer_Tick(sender, e);
         }
-
-        /// <summary>
-        /// Stops the timer TODO
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
    
 
         /// <summary>

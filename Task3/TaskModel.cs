@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Threading;
 using System.ComponentModel;
 using System.Data.Entity;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
 namespace Task3
@@ -16,6 +17,7 @@ namespace Task3
         private string _name = null;
         ProjectInfoContext _taskEntities;
         DispatcherTimer _timer;
+        float _rate;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public TaskModel() { }
@@ -44,18 +46,6 @@ namespace Task3
                 NotifyPropertyChanged("TaskTimerText");
             }
         }
-
-        public int ModelTaskID { get { return _taskID; } }
-
-        public TaskInfo CurrenntTaskEntity
-        {
-            get
-            {
-                var task = GetById(_taskID);
-                return task;
-            }
-        }
-
         public string TaskTimerText
         {
             get { return ShowTime(_time); }
@@ -71,15 +61,33 @@ namespace Task3
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public string TaskNameText
         {
             get { return _name; }
             set
             {
                 _name = value;
+            }
+        }
+        public float HourRate
+        {
+            get { return _rate; }
+            set
+            {
+                _rate = value;
+                NotifyPropertyChanged("HourRate");
+            }
+        }
+
+        public float TaskRateText { get { return _rate; } }
+        public int ModelTaskID { get { return _taskID; } }
+
+        public TaskInfo CurrenntTaskEntity
+        {
+            get
+            {
+                var task = GetById(_taskID);
+                return task;
             }
         }
 

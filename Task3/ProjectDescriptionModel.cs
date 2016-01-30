@@ -118,7 +118,7 @@ namespace Task3
                     return;
                 }
                 entity.ProjectName = Name;
-                entity.ProjectTasks = ProjectTasks;
+                entity.ProjectDescriptionText = ProjectDescriptionText;
                 cntx.SaveChanges();
             }
             

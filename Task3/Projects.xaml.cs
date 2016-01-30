@@ -31,8 +31,6 @@ namespace Task3
         public Projects()
         {
             _projects = new ObservableCollection<ProjectDescription>();
-            //_projectNameAndDescription = new Dictionary<string, string>();
-            //_projectUI = new ProjectTasks();
             InitializeComponent();
         }
 
@@ -46,7 +44,6 @@ namespace Task3
             {
                 MessageBox.Show(item.ProjectName + " " + item.ProjectDescriptionText);
             }
-            //listViewProjectsNamesAndDescriptions.ItemsSource = null;
             listViewProjectsNamesAndDescriptions.ItemsSource = projects;
         }
 
