@@ -4,10 +4,11 @@ using System.Linq;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
+using System.Collections.ObjectModel;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Threading;
+using System.Windows;
 
 namespace Task3
 {
@@ -61,6 +62,9 @@ namespace Task3
             }
         }
 
+        public ObservableCollection<TaskInfo> ProjectTasks { get; set; }
+       
+
         /// <summary>
         /// Deletes the Project with all Tasks in it
         /// </summary>
@@ -97,12 +101,27 @@ namespace Task3
 
         public void InsertSession(ProjectDescription entity)
         {
-            
+            using (var cntx = new ProjectInfoContext())
+            {
+                cntx.Projects.Add(entity);
+                cntx.SaveChanges();
+            }
         }
 
         public void UpdateSession(ProjectDescription entity)
         {
-            throw new NotImplementedException();
+            using (var cntx = new ProjectInfoContext())
+            {
+                if (GetById(entity.ProjectId) != null)
+                {
+                    MessageBox.Show("No such Project found");
+                    return;
+                }
+                entity.ProjectName = Name;
+                entity.ProjectTasks = ProjectTasks;
+                cntx.SaveChanges();
+            }
+            
         }
     }
 }
