@@ -57,6 +57,7 @@ namespace Task3
             }
             _model = new ProjectDescriptionModel();
             _model.InsertSession(_currentProject);
+            _projectsUI.ListOfProjects.Add(_currentProject);
             //_projectsUI.ListOfProjects.Add(_currentProject);
             //_projectsUI.AddingToNameAndDescriptionList(_projectsUI.ListOfProjects);
             this.Close();

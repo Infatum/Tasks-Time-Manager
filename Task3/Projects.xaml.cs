@@ -26,6 +26,7 @@ namespace Task3
         ObservableCollection<ProjectDescription> _projects;
         ProjectDescription _currentProject;
         ProjectDescriptionModel _model;
+        ProjectTasks _taskWindow;
         AddNewProject _newProjectWindow;
 
         public ObservableCollection<ProjectDescription> ProjectsListDataSource { get { return _projects; } }
@@ -33,6 +34,7 @@ namespace Task3
         {
             _model = new ProjectDescriptionModel();
             _projects = new ObservableCollection<ProjectDescription>();
+  
             InitializeComponent();
             LoadProjects(_model);
             this.DataContext = this;
@@ -60,6 +62,16 @@ namespace Task3
                 MessageBox.Show(item.ProjectName + " " + item.ProjectDescriptionText);
             }
             this.listViewProjectsNamesAndDescriptions.ItemsSource = projects;
+        }
+
+        void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var item = ((FrameworkElement)e.OriginalSource).DataContext as ProjectDescription;
+            if (item != null)
+            {
+                _taskWindow = new ProjectTasks();
+                _taskWindow.Show();
+            }
         }
 
         private void OnLoad()

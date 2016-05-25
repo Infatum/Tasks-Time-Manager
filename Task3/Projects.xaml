@@ -13,7 +13,8 @@
         <Button x:Name="btnNewProject"  BorderBrush="White" Content="New Project"  Background="Gray" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" Width="166" Height="33" Click="btnNewProject_Click"/>
         <Button x:Name="btnDeleteSelected" BorderBrush="White" Content="Delete Selected Project"  Background="Gray" HorizontalAlignment="Left" Margin="219,45,0,0" VerticalAlignment="Top" Width="168" Height="33"/>
         <TextBox x:Name="txtBoxProjectName" HorizontalAlignment="Left" Height="30" Margin="10,83,0,0" TextWrapping="Wrap" Text="Search" VerticalAlignment="Top" Width="377" IsEnabled="False" />
-        <ListView x:Name="listViewProjectsNamesAndDescriptions" HorizontalAlignment="Left" Height="142" VerticalAlignment="Top" Width="377" Margin="10,118,0,0">
+
+        <ListView x:Name="listViewProjectsNamesAndDescriptions" ItemsSource="{Binding ProjectsCollection}" MouseDoubleClick="ListView_MouseDoubleClick" HorizontalAlignment="Left" Height="142" VerticalAlignment="Top" Width="377" Margin="10,118,0,0">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="160" DisplayMemberBinding="{Binding Path=ProjectName}"/>
