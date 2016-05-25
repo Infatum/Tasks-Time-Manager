@@ -17,7 +17,7 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="160" DisplayMemberBinding="{Binding Path=ProjectName}"/>
-                    <GridViewColumn Header="Description" Width="200" DisplayMemberBinding="{Binding Path=ProjectDescriptionText}"/>
+                    <GridViewColumn Header="Description" Width="252" DisplayMemberBinding="{Binding Path=ProjectDescriptionText}"/>
                 </GridView>
             </ListView.View>
         </ListView>

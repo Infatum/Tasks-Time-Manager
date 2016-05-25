@@ -80,7 +80,7 @@ namespace Task3
         }
 
         public float TaskRateText { get { return _rate; } }
-        public int ModelTaskID { get { return _taskID; } }
+        public int TaskID { get { return _taskID; } }
 
         public TaskInfo CurrenntTaskEntity
         {
@@ -120,10 +120,6 @@ namespace Task3
             }
         }
 
-        public int GetID()
-        {
-            return _taskID;
-        }
         public void CreateDB()
         {
             _taskEntities = new ProjectInfoContext();

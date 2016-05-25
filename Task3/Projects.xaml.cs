@@ -25,26 +25,41 @@ namespace Task3
     {
         ObservableCollection<ProjectDescription> _projects;
         ProjectDescription _currentProject;
+        ProjectDescriptionModel _model;
         AddNewProject _newProjectWindow;
 
         public ObservableCollection<ProjectDescription> ProjectsListDataSource { get { return _projects; } }
         public Projects()
         {
+            _model = new ProjectDescriptionModel();
             _projects = new ObservableCollection<ProjectDescription>();
             InitializeComponent();
+            LoadProjects(_model);
+            this.DataContext = this;
         }
 
         public ObservableCollection<ProjectDescription> ListOfProjects
         {
             get { return _projects; }
         }
+
+        private void LoadProjects(ProjectDescriptionModel model)
+        {
+           var projects = model.LoadSession();
+            foreach (var proj in projects)
+            {
+                this.ListOfProjects.Add(proj);
+            }
+            AddingToNameAndDescriptionList(this.ListOfProjects);
+        }
+
         public void AddingToNameAndDescriptionList(ObservableCollection<ProjectDescription> projects)
         {
             foreach (var item in projects)
             {
                 MessageBox.Show(item.ProjectName + " " + item.ProjectDescriptionText);
             }
-            listViewProjectsNamesAndDescriptions.ItemsSource = projects;
+            this.listViewProjectsNamesAndDescriptions.ItemsSource = projects;
         }
 
         private void OnLoad()

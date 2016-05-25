@@ -15,6 +15,7 @@ namespace Task3
         string _description;
         Projects _projectsUI;
         List<ProjectDescription> _projects;
+        ProjectDescriptionModel _model;
         public event PropertyChangedEventHandler PropertyChanged;
         public AddNewProject()
         {
@@ -38,7 +39,7 @@ namespace Task3
 
         private void btnAddProject_Click(object sender, RoutedEventArgs e)
         {
-            if (Name == null) // FIXME: Show message on form (window)
+            if (Name == null) 
             {
                 MessageBox.Show("Fill in Name field");
                 return;
@@ -54,8 +55,10 @@ namespace Task3
                 _projectsUI = new Projects();
                 _projectsUI.Show();
             }
-            _projectsUI.ListOfProjects.Add(_currentProject);
-            _projectsUI.AddingToNameAndDescriptionList(_projectsUI.ListOfProjects);
+            _model = new ProjectDescriptionModel();
+            _model.InsertSession(_currentProject);
+            //_projectsUI.ListOfProjects.Add(_currentProject);
+            //_projectsUI.AddingToNameAndDescriptionList(_projectsUI.ListOfProjects);
             this.Close();
         }
 

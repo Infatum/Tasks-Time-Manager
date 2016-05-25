@@ -74,7 +74,7 @@
     <Compile Include="AddNewProject.xaml.cs">
       <DependentUpon>AddNewProject.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IStorage.cs" />
+    <Compile Include="Data\IStorage.cs" />
     <Compile Include="Migrations\201512132026590_InitialCreate.cs" />
     <Compile Include="Migrations\201512132026590_InitialCreate.Designer.cs">
       <DependentUpon>201512132026590_InitialCreate.cs</DependentUpon>
@@ -89,7 +89,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProjectDescriptionModel.cs" />
-    <Compile Include="ProjectDescription.cs" />
+    <Compile Include="Data\ProjectDescription.cs" />
     <Compile Include="Projects.xaml.cs">
       <DependentUpon>Projects.xaml</DependentUpon>
     </Compile>
@@ -98,7 +98,7 @@
       <DependentUpon>TaskBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="TaskInfo.cs" />
-    <Compile Include="TaskInfoContext.cs" />
+    <Compile Include="Data\TaskInfoContext.cs" />
     <Page Include="AddNewProject.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -165,7 +165,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
