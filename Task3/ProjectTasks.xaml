@@ -14,7 +14,7 @@
             </StackPanel>
         </ScrollViewer>
         <Button x:Name="btnRemoveSelectedTask" Content="Remove Selected Task" FontSize="12" Background="LightGray" Foreground="Black" Margin="0,10,200,0" HorizontalAlignment="Right" Width="132" Height="21" VerticalAlignment="Top" Click="btnAddTimer_Click"/>
-        <CheckBox x:Name="checkBoxFreelancerMode" Content="Freellancer Mode" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Checked="FrellancerModeOn"/>
-        <TextBox x:Name="tbProjectRate" HorizontalAlignment="Left" IsEnabled="False" Height="17" Margin="200,36,0,0" Text="{Binding Path=TaskNameText}" TextWrapping="Wrap" VerticalAlignment="Top" Width="132"/>
+        <CheckBox x:Name="checkBoxFreelancerMode" IsThreeState="True" Content="Freellancer Mode" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Checked="FrellancerModeOn"/>
+        <TextBox x:Name="tbProjectRate" HorizontalAlignment="Left" Visibility="Hidden" IsEnabled="False" Height="17" Margin="200,36,0,0" Text="{Binding Path=TaskNameText}" TextWrapping="Wrap" VerticalAlignment="Top" Width="132"/>
     </Grid>
 </Window>

@@ -17,17 +17,18 @@ namespace Task3
         TaskModel _model;
         bool _timerIsActive;
 
-        public TaskBox(int taskID)
+        public TaskBox(TaskModel model, int taskID)
         {
             InitializeComponent();
+            _model = model;
             textBlock.Tag = ID;
             this._model = new TaskModel(taskID);
-            //_model.CreateDB();
+            _model.CreateDB();
             this.DataContext = this._model;
         }
 
         /// <summary>
-        /// Creating a TaskBox item with enebled Freelancer Mode and hour rate
+        /// Creating a TaskBox item with ID and enebled Freelancer Mode and hour rate
         /// </summary>
         /// <param name="taskID">№ of a taskbox item, ordered by ascending</param>
         /// <param name="rate">Rate per hours(freelancer mode availeble only)</param>
@@ -36,7 +37,7 @@ namespace Task3
             InitializeComponent();
             textBlock.Tag = ID;
             this._model = new TaskModel(taskID);
-            //_model.CreateDB();
+            _model.CreateDB();
             this.DataContext = this._model;
         } 
         public TaskBox(int taskID, int logged, string name)
@@ -57,7 +58,7 @@ namespace Task3
         }
 
         /// <summary>
-        /// Creating a TaskBox item with enebled Freelancer Mode and hour rate
+        /// Creating a TaskBox item with ID, time logged, name and enebled Freelancer Mode with hour rate
         /// </summary>
         /// <param name="taskID">№ of a taskbox item, ordered by ascending</param>
         /// <param name="logged">A raw representation of the logged time(without formatting)</param>
@@ -106,7 +107,7 @@ namespace Task3
             {
                 if (b.Content.ToString() == "Start")
                 {
-                    _model.InsertSession(new TaskInfo { TaskBoxID = this.ID });
+                    _model.InsertSession(this.ID, this._model.CurrentProject);
                 }
                 _model.StartResumeTimer();
                 b.Content = "Pause";

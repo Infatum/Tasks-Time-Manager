@@ -97,7 +97,7 @@
     <Compile Include="TaskBox.xaml.cs">
       <DependentUpon>TaskBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TaskInfo.cs" />
+    <Compile Include="Data\TaskInfo.cs" />
     <Compile Include="Data\TaskInfoContext.cs" />
     <Page Include="AddNewProject.xaml">
       <SubType>Designer</SubType>

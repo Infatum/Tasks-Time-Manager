@@ -69,7 +69,7 @@ namespace Task3
             var item = ((FrameworkElement)e.OriginalSource).DataContext as ProjectDescription;
             if (item != null)
             {
-                _taskWindow = new ProjectTasks();
+                _taskWindow = new ProjectTasks(item);
                 _taskWindow.Show();
             }
         }

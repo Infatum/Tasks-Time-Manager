@@ -10,14 +10,17 @@ using System.Collections.Generic;
 
 namespace Task3
 {
-    public class TaskModel : INotifyPropertyChanged, IRepository<TaskInfo>
+    public class TaskModel : INotifyPropertyChanged
     {
         int _taskID;
         private int _time = 0;
         private string _name = null;
-        ProjectInfoContext _taskEntities;
-        DispatcherTimer _timer;
-        float _rate;
+        private bool _freelanceMode;
+        private ProjectDescription _currentProj;
+        private ProjectInfoContext _taskEntities = new ProjectInfoContext();
+        private TaskInfo _currentTask;
+        private DispatcherTimer _timer;
+        private float _rate;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public TaskModel() { }
@@ -28,6 +31,19 @@ namespace Task3
             _timer.Interval = new TimeSpan(0, 0, 1);
         }
 
+        public TaskModel(int taskBoxID, ProjectDescription project)
+        {
+            TaskInfo _currentTask = new TaskInfo();
+            _currentTask.Task_Id = taskBoxID;
+            _currentTask.TaskBoxID = taskBoxID;
+            _currentTask.Project = project;
+            _currentProj= project;
+            //_taskID = taskBoxID;
+            _timer = new DispatcherTimer();
+            //_currentProj = project;
+            _timer.Interval = new TimeSpan(0, 0, 1);
+        }
+
         public TaskModel(int taskID, int logged, string title)
         {
             _taskID = taskID;
@@ -35,6 +51,26 @@ namespace Task3
             _timer.Interval = new TimeSpan(0, 0, 1);
             Time = logged;
             Name = title;
+        }
+
+        public TaskModel(int taskID, int logged, string title, float rate)
+        {
+            _taskID = taskID;
+            _timer = new DispatcherTimer();
+            _timer.Interval = new TimeSpan(0, 0, 1);
+            Time = logged;
+            Name = title;
+            HourRate = rate;
+        }
+
+        public bool FreelanceMode
+        {
+            get { return _freelanceMode; }
+            set
+            {
+                _freelanceMode = value;
+                NotifyPropertyChanged("FreelancerMode");
+            }
         }
 
         public int Time
@@ -79,6 +115,11 @@ namespace Task3
             }
         }
 
+        public ProjectDescription CurrentProject
+        {
+            get { return _currentProj; }
+        }
+
         public float TaskRateText { get { return _rate; } }
         public int TaskID { get { return _taskID; } }
 
@@ -86,11 +127,24 @@ namespace Task3
         {
             get
             {
-                var task = GetById(_taskID);
-                return task;
+                if (_currentTask == null)
+                {
+                    _currentTask = new TaskInfo();
+                }
+                return _currentTask;
             }
         }
+    
 
+        public void InsertSession(int taskID, ProjectDescription project)
+        {
+            _currentTask = new TaskInfo();
+            _currentTask.Task_Id = taskID;
+            _currentTask.Project = project;
+            _taskEntities.TaskDataEntities.Add(_currentTask);
+            _taskEntities.SaveChanges();
+        }
+      
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null) // Check if no interface? do nothing
@@ -188,12 +242,7 @@ namespace Task3
             var task = (from t in _taskEntities.TaskDataEntities where t.TaskBoxID == id select t).First();
             return task;
         }
-
-        public void InsertSession(TaskInfo entity)
-        {
-            _taskEntities.TaskDataEntities.Add(entity);
-            _taskEntities.SaveChanges();
-        }
+       
 
         /// <summary>
         /// Deletes current Task, without deleting the project

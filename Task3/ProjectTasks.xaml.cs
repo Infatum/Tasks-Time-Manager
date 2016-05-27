@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Linq;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using iTextSharp.text;
@@ -29,24 +30,14 @@ namespace Task3
 
         public static int TaskID { get { return taskCounter; } }
 
-        public ProjectTasks()
+        public ProjectTasks(ProjectDescription currentProject)
         {
             _tasks = new ObservableCollection<TaskBox>();
             InitializeComponent();
             LoadTaskSessions();
             _db = new ProjectInfoContext();
             taskCounter = getMaxTaskID() + 1;
-            _currentProject = new ProjectDescription();
-            _freelancerMode = false;
-
-        }
-        public ProjectTasks(string name)
-        {
-            _tasks = new ObservableCollection<TaskBox>();
-            InitializeComponent();
-            LoadTaskSessions();
-            _db = new ProjectInfoContext();
-            taskCounter = getMaxTaskID() + 1;
+            _currentProject = currentProject;
             _freelancerMode = false;
           
         }
@@ -81,13 +72,20 @@ namespace Task3
 
         private void btnAddTimer_Click(object sender, RoutedEventArgs e)
         {
+            TaskModel model = new TaskModel(taskCounter, _currentProject);
+            if (_currentProject.ProjectTasks == null)
+            {
+                _currentProject.ProjectTasks = new List<TaskInfo>();
+            }
+            _currentProject.ProjectTasks.Add(model.CurrenntTaskEntity);
+            model.InsertSession(taskCounter, _currentProject);
             if (_freelancerMode == true)
             {
                 tb = new TaskBox(taskCounter, _rate);
             }
             else
             {
-                tb = new TaskBox(taskCounter);
+                tb = new TaskBox(model, taskCounter);
             }
            
             tb.ID = taskCounter;
