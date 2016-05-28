@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Linq;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using iTextSharp.text;
@@ -20,6 +19,7 @@ namespace Task3
     {
         ObservableCollection<TaskBox> _tasks;
         public TaskBox tb = null;
+        private TaskModel _task;
         static int taskCounter = 0;
         ProjectInfoContext _db;
         ProjectDescription _currentProject;
@@ -30,16 +30,31 @@ namespace Task3
 
         public static int TaskID { get { return taskCounter; } }
 
-        public ProjectTasks(ProjectDescription currentProject)
+        public ProjectTasks(ProjectDescription project)
+        {
+            
+            _tasks = new ObservableCollection<TaskBox>();
+            InitializeComponent();
+            _db = new ProjectInfoContext();
+            taskCounter = getMaxTaskID() + 1;
+            _currentProject = project;
+            _task = new TaskModel(taskCounter, _currentProject);
+            _freelancerMode = false;
+            _task.CreateDB();
+            LoadTaskSessions();
+
+        }
+        public ProjectTasks(string name)
         {
             _tasks = new ObservableCollection<TaskBox>();
             InitializeComponent();
-            LoadTaskSessions();
             _db = new ProjectInfoContext();
             taskCounter = getMaxTaskID() + 1;
-            _currentProject = currentProject;
             _freelancerMode = false;
-          
+            _task = new TaskModel(taskCounter, _currentProject);
+            _task.CreateDB();
+            LoadTaskSessions();
+
         }
 
         private int getMaxTaskID()
@@ -61,9 +76,9 @@ namespace Task3
                 var savedSessions = db.TaskDataEntities.ToList();
                 foreach (TaskInfo session in savedSessions)
                 {
-                    tb = new TaskBox(session.TaskBoxID, session.TrackedTime, session.Name);
-                    //TODO FreelancerMode
-                    //tb.textBlockHorRate = 
+                    tb = new TaskBox(session.TaskBoxID, session.TrackedTime,  session.Name, _rate, _currentProject);
+                    //TODO FreelancerMode 
+                    tb.textBlockHorRate.Text = _rate.ToString();
                     _tasks.Add(tb);
                     tasksStackPanel.Children.Add(tb);
                 }
@@ -72,20 +87,19 @@ namespace Task3
 
         private void btnAddTimer_Click(object sender, RoutedEventArgs e)
         {
-            TaskModel model = new TaskModel(taskCounter, _currentProject);
-            if (_currentProject.ProjectTasks == null)
-            {
-                _currentProject.ProjectTasks = new List<TaskInfo>();
-            }
-            _currentProject.ProjectTasks.Add(model.CurrenntTaskEntity);
-            model.InsertSession(taskCounter, _currentProject);
+
             if (_freelancerMode == true)
             {
-                tb = new TaskBox(taskCounter, _rate);
+                _task = new TaskModel(taskCounter, _rate, _currentProject);
+                _task.InsertSession(new TaskInfo() { TaskBoxID = taskCounter, Task_Id = taskCounter, HourRate = _rate, Project = _currentProject });
+                tb = new TaskBox(taskCounter, _rate, _currentProject);
+
             }
             else
             {
-                tb = new TaskBox(model, taskCounter);
+                _task = new TaskModel(taskCounter, _currentProject);
+                _task.InsertSession(new TaskInfo() { Task_Id = taskCounter, TaskBoxID = taskCounter, Project = _currentProject });
+                tb = new TaskBox(taskCounter, _currentProject);
             }
            
             tb.ID = taskCounter;

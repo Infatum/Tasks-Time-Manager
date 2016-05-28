@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace Task3
 {
-    public class ProjectDescriptionModel : IRepository<ProjectDescription>, INotifyPropertyChanged
+    public class ProjectDescriptionModel :  INotifyPropertyChanged
 
     {
         private string _name;
@@ -54,7 +54,7 @@ namespace Task3
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
 
-        public ICollection<ProjectDescription> LoadSession()
+        public ICollection<ProjectDescription> Projects()
         {
             using (var context = new ProjectInfoContext())
             {
@@ -64,6 +64,16 @@ namespace Task3
 
         public ObservableCollection<TaskInfo> ProjectTasks { get; set; }
        
+        public ICollection<ProjectDescription> LoadSession()
+        {
+            using (ProjectInfoContext context = new ProjectInfoContext())
+            {
+                var projects = context.Projects
+                                      .Include(p => p.ProjectTasks)
+                                      .ToList();
+                return projects;
+            }
+        }
 
         /// <summary>
         /// Deletes the Project with all Tasks in it
@@ -84,7 +94,7 @@ namespace Task3
             
         }
 
-        public ProjectDescription GetById(int id)
+        public ProjectDescription GetByTaskBoxId(int id)
         {
             using (var context = new ProjectInfoContext())
             {
@@ -112,7 +122,7 @@ namespace Task3
         {
             using (var cntx = new ProjectInfoContext())
             {
-                if (GetById(entity.ProjectId) != null)
+                if (GetByTaskBoxId(entity.ProjectId) != null)
                 {
                     MessageBox.Show("No such Project found");
                     return;

@@ -74,7 +74,6 @@
     <Compile Include="AddNewProject.xaml.cs">
       <DependentUpon>AddNewProject.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\IStorage.cs" />
     <Compile Include="Migrations\201512132026590_InitialCreate.cs" />
     <Compile Include="Migrations\201512132026590_InitialCreate.Designer.cs">
       <DependentUpon>201512132026590_InitialCreate.cs</DependentUpon>
@@ -86,6 +85,10 @@
     <Compile Include="Migrations\201601092013466_AddPropProjectDescriptionText.cs" />
     <Compile Include="Migrations\201601092013466_AddPropProjectDescriptionText.Designer.cs">
       <DependentUpon>201601092013466_AddPropProjectDescriptionText.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605281436260_AddTaskInfoclass.cs" />
+    <Compile Include="Migrations\201605281436260_AddTaskInfoclass.Designer.cs">
+      <DependentUpon>201605281436260_AddTaskInfoclass.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProjectDescriptionModel.cs" />
@@ -147,6 +150,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601092013466_AddPropProjectDescriptionText.resx">
       <DependentUpon>201601092013466_AddPropProjectDescriptionText.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605281436260_AddTaskInfoclass.resx">
+      <DependentUpon>201605281436260_AddTaskInfoclass.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

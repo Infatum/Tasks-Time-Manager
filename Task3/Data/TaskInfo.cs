@@ -13,6 +13,7 @@ namespace Task3
         public int TrackedTime { get; set; }
         public int TaskBoxID { get; set; }
         public ProjectDescription Project { get; set; }
+        public float HourRate { get; set; }
         public int Task_Id { get; set; }
     }
 }

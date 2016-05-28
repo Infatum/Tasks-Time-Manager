@@ -17,34 +17,43 @@ namespace Task3
         TaskModel _model;
         bool _timerIsActive;
 
-        public TaskBox(TaskModel model, int taskID)
+        public TaskBox(int taskID, ProjectDescription project)
         {
             InitializeComponent();
-            _model = model;
             textBlock.Tag = ID;
-            this._model = new TaskModel(taskID);
-            _model.CreateDB();
+            this._model = new TaskModel(taskID, project);
+            //_model.CreateDB();
+            this.DataContext = this._model;
+        }
+
+
+        public TaskBox(int taskID, string name, int loggedTime, ProjectDescription project)
+        {
+            InitializeComponent();
+            textBlock.Tag = ID;
+            this._model = new TaskModel(taskID, project);
+            //_model.CreateDB();
             this.DataContext = this._model;
         }
 
         /// <summary>
-        /// Creating a TaskBox item with ID and enebled Freelancer Mode and hour rate
+        /// Creating a TaskBox item with enebled Freelancer Mode and hour rate
         /// </summary>
         /// <param name="taskID">№ of a taskbox item, ordered by ascending</param>
         /// <param name="rate">Rate per hours(freelancer mode availeble only)</param>
-        public TaskBox(int taskID, float rate)
+        public TaskBox(int taskID, float rate, ProjectDescription project)
         {
             InitializeComponent();
             textBlock.Tag = ID;
-            this._model = new TaskModel(taskID);
-            _model.CreateDB();
+            this._model = new TaskModel(taskID, project);
+            //_model.CreateDB();
             this.DataContext = this._model;
         } 
-        public TaskBox(int taskID, int logged, string name)
+        public TaskBox(int taskID, int projectId)
         {
             InitializeComponent();
             textBlock.Tag = ID;
-            this._model = new TaskModel(taskID, logged, name);
+            this._model = new TaskModel(taskID, projectId);
             _model.CreateDB();
             this.DataContext = this._model;
             if (_model.DBContext.TaskDataEntities.Count() > 0)
@@ -58,17 +67,17 @@ namespace Task3
         }
 
         /// <summary>
-        /// Creating a TaskBox item with ID, time logged, name and enebled Freelancer Mode with hour rate
+        /// Creating a TaskBox item with enebled Freelancer Mode and hour rate
         /// </summary>
         /// <param name="taskID">№ of a taskbox item, ordered by ascending</param>
         /// <param name="logged">A raw representation of the logged time(without formatting)</param>
         /// <param name="name">Name of task</param>
         /// <param name="rate">Rate per hours(freelancer mode availeble only)</param>
-        public TaskBox(int taskID, int logged, string name, float rate)
+        public TaskBox(int taskID, int logged, string name, float rate, ProjectDescription project)
         {
             InitializeComponent();
             textBlock.Tag = ID;
-            this._model = new TaskModel(taskID, logged, name);
+            this._model = new TaskModel(taskID, logged, name, project);
             _model.CreateDB();
             this.DataContext = this._model;
             if (_model.DBContext.TaskDataEntities.Count() > 0)
@@ -107,7 +116,7 @@ namespace Task3
             {
                 if (b.Content.ToString() == "Start")
                 {
-                    _model.InsertSession(this.ID, this._model.CurrentProject);
+                    _model.InsertSession(new TaskInfo { TaskBoxID = this.ID });
                 }
                 _model.StartResumeTimer();
                 b.Content = "Pause";

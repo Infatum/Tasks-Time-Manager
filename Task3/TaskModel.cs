@@ -15,36 +15,40 @@ namespace Task3
         int _taskID;
         private int _time = 0;
         private string _name = null;
-        private bool _freelanceMode;
-        private ProjectDescription _currentProj;
-        private ProjectInfoContext _taskEntities = new ProjectInfoContext();
-        private TaskInfo _currentTask;
-        private DispatcherTimer _timer;
-        private float _rate;
+        ProjectInfoContext _taskEntities;
+        ProjectDescription _currentProject;
+        DispatcherTimer _timer;
+        List<TaskInfo> _currentProjectTasks;
+        private ICollection<TaskInfo> _tasks;
+        float _rate;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public TaskModel() { }
-        public TaskModel(int taskBoxID)
+        public TaskModel(int taskBoxID, ProjectDescription project)
         {
+            _currentProject = project;
+            _taskID = taskBoxID;
+            _timer = new DispatcherTimer();
+            _timer.Interval = new TimeSpan(0, 0, 1);
+        }
+        public TaskModel(int taskBoxID, float hourRate,  ProjectDescription project)
+        {
+            _currentProject = project;
+            _taskID = taskBoxID;
+            HourRate = hourRate;
+            _timer = new DispatcherTimer();
+            _timer.Interval = new TimeSpan(0, 0, 1);
+        }
+
+        public TaskModel(int taskBoxID, int projectID)
+        {
+            _currentProjectTasks = (List<TaskInfo>)LoadSession(projectID);
             _taskID = taskBoxID;
             _timer = new DispatcherTimer();
             _timer.Interval = new TimeSpan(0, 0, 1);
         }
 
-        public TaskModel(int taskBoxID, ProjectDescription project)
-        {
-            TaskInfo _currentTask = new TaskInfo();
-            _currentTask.Task_Id = taskBoxID;
-            _currentTask.TaskBoxID = taskBoxID;
-            _currentTask.Project = project;
-            _currentProj= project;
-            //_taskID = taskBoxID;
-            _timer = new DispatcherTimer();
-            //_currentProj = project;
-            _timer.Interval = new TimeSpan(0, 0, 1);
-        }
-
-        public TaskModel(int taskID, int logged, string title)
+        public TaskModel(int taskID, int logged, string title, ProjectDescription project)
         {
             _taskID = taskID;
             _timer = new DispatcherTimer();
@@ -53,26 +57,8 @@ namespace Task3
             Name = title;
         }
 
-        public TaskModel(int taskID, int logged, string title, float rate)
-        {
-            _taskID = taskID;
-            _timer = new DispatcherTimer();
-            _timer.Interval = new TimeSpan(0, 0, 1);
-            Time = logged;
-            Name = title;
-            HourRate = rate;
-        }
-
-        public bool FreelanceMode
-        {
-            get { return _freelanceMode; }
-            set
-            {
-                _freelanceMode = value;
-                NotifyPropertyChanged("FreelancerMode");
-            }
-        }
-
+        public bool TimerIsActive { get; set; }
+        public List<TaskInfo> ProjectTasks { get { return _currentProjectTasks; } }
         public int Time
         {
             get { return _time; }
@@ -115,11 +101,6 @@ namespace Task3
             }
         }
 
-        public ProjectDescription CurrentProject
-        {
-            get { return _currentProj; }
-        }
-
         public float TaskRateText { get { return _rate; } }
         public int TaskID { get { return _taskID; } }
 
@@ -127,24 +108,12 @@ namespace Task3
         {
             get
             {
-                if (_currentTask == null)
-                {
-                    _currentTask = new TaskInfo();
-                }
-                return _currentTask;
+                var task = GetByTaskBoxId(_taskID);
+                return task;
             }
         }
-    
 
-        public void InsertSession(int taskID, ProjectDescription project)
-        {
-            _currentTask = new TaskInfo();
-            _currentTask.Task_Id = taskID;
-            _currentTask.Project = project;
-            _taskEntities.TaskDataEntities.Add(_currentTask);
-            _taskEntities.SaveChanges();
-        }
-      
+        public TaskInfo CurrentTaskEntity { get; set; }
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null) // Check if no interface? do nothing
@@ -181,12 +150,19 @@ namespace Task3
 
         public ProjectInfoContext DBContext { get { return _taskEntities; } }
 
-        public ICollection<TaskInfo> LoadSession()
+        public ICollection<TaskInfo> LoadSession(int projectID)
         {
+
             using (var context = new ProjectInfoContext())
             {
-                var tasks = context.TaskDataEntities.ToList();
-                return tasks;
+                var projectWithTasks = context.Projects
+                                    .Where(p => p.ProjectId == projectID)
+                                    .Include("ProjectTasks")
+                                    .FirstOrDefault();
+
+                _currentProject = projectWithTasks;
+                _tasks = projectWithTasks.ProjectTasks;
+                return _tasks;
             }
         }
 
@@ -209,7 +185,7 @@ namespace Task3
         /// <param name="name"></param>
         public void UpdateSession(TaskInfo entity)
         {
-            if (GetById(_taskID) != null)
+            if (GetByTaskBoxId(_taskID) == null)
             {
                 MessageBox.Show("ERROR: Task not found in DB. Skip savig...");
                 return;
@@ -237,12 +213,41 @@ namespace Task3
             _timer.Stop();
         }
 
-        public TaskInfo GetById(int id)
+        /// <summary>
+        /// Finds the task entity in DB within giving taskBox ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns> returns a TaskInfo object in case, when finds it in the DataBasw by the ID of a taskBox, if doesn't - evaluates NullReferenceException</returns>
+        public TaskInfo GetByTaskBoxId(int id)
         {
-            var task = (from t in _taskEntities.TaskDataEntities where t.TaskBoxID == id select t).First();
+            TaskInfo task = null;
+            foreach (var t in _tasks)
+            {
+                if (t.TaskBoxID == id)
+                {
+                    task = t;
+                    _taskID = t.TaskBoxID;
+                }
+            }
             return task;
         }
-       
+
+        public void InsertSession(TaskInfo entity)
+        {
+                try
+                {
+                    _currentProject.ProjectTasks.Add(entity);
+                }
+                catch (Exception ex)
+                {
+
+                    _currentProject.ProjectTasks = new List<TaskInfo>();
+                }
+                finally
+                {
+                    _taskEntities.SaveChanges();
+                }
+        }
 
         /// <summary>
         /// Deletes current Task, without deleting the project

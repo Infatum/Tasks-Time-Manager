@@ -47,7 +47,7 @@ namespace Task3
 
         private void LoadProjects(ProjectDescriptionModel model)
         {
-           var projects = model.LoadSession();
+            var projects = model.LoadSession();
             foreach (var proj in projects)
             {
                 this.ListOfProjects.Add(proj);
@@ -67,6 +67,9 @@ namespace Task3
         void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var item = ((FrameworkElement)e.OriginalSource).DataContext as ProjectDescription;
+            if(_model.ProjectTasks != null)
+                _model.ProjectTasks.ToList();
+    
             if (item != null)
             {
                 _taskWindow = new ProjectTasks(item);
