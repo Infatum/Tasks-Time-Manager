@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="Task3.Components.PDFGenerator">
+    <Position X="6.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAQAAAAAAgAAAAEAAAAAAAAQAAAI=</HashCode>
+      <FileName>Components\PDFGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TasksTracker.Model.ConcreteLayer.MSSQLServerProjectModel" BaseTypeListCollapsed="true">
+    <Position X="3.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAEAAAAAAAAAAAEAABAAAAAQAEAgAAAAAAAAIAAA=</HashCode>
+      <FileName>Model\ConcreteLayer\MSSQLServerProjectModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TasksTracker.Model.ConcreteLayer.MSSQLServerTaskModel" BaseTypeListCollapsed="true">
+    <Position X="5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAGBACAAAAAAAEAIAhAAABAAEAAggAACAADCAACA=</HashCode>
+      <FileName>Model\ConcreteLayer\MSSQLServerTaskModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TasksTracker.Migrations.InitialCreate" BaseTypeListCollapsed="true">
+    <Position X="1.5" Y="4" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAMAAAAAAAAAAAAAAAAAAAAAAAAAAQEAAAAAI=</HashCode>
+      <FileName>Model\Data\Migrations\201512132026590_InitialCreate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TasksTracker.Migrations.AddProjectDescriptions" BaseTypeListCollapsed="true">
+    <Position X="1.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAMAAAAAAAAAAAAAAAAAAAAAAAAAAQEAAAAAI=</HashCode>
+      <FileName>Model\Data\Migrations\201601091407110_AddProjectDescriptions.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TasksTracker.Migrations.AddPropProjectDescriptionText" BaseTypeListCollapsed="true">
+    <Position X="3.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAMAAAAAAAAAAAAAAAAAAAAAAAAAAQEAAAAAI=</HashCode>
+      <FileName>Model\Data\Migrations\201601092013466_AddPropProjectDescriptionText.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TasksTracker.Migrations.AddTaskInfoclass" BaseTypeListCollapsed="true">
+    <Position X="5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAMAAAAAAAAAAAAAAAAAAAAAAAAAAQEAAAAAI=</HashCode>
+      <FileName>Model\Data\Migrations\201605281436260_AddTaskInfoclass.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TasksTracker.Migrations.Configuration">
+    <Position X="6.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Data\Migrations\Configuration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TasksTracker.Data.ProjectDescription">
+    <Position X="6.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAgCAAAAIAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Data\ProjectDescription.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TasksTracker.Data.ProjectInfoContext" Collapsed="true">
+    <Position X="1.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Model\Data\ProjectInfoContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TasksTracker.Data.TaskInfo">
+    <Position X="5.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAgAAAAAAACCQAAAAAAAAQAAAIAAAAAAA=</HashCode>
+      <FileName>Model\Data\TaskInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TasksTracker.AddNewProject" BaseTypeListCollapsed="true">
+    <Position X="8.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\AddNewProject.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TasksTracker.Projects" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAABAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>View\ProjectsWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TasksTracker.TaskBox" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgABAAAAAAAAAgAIAAACAAAAACAAAAAA=</HashCode>
+      <FileName>View\TaskBox.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TasksTracker.ProjectTaskWindow" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\TasksWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Task3.ViewModel.ProjectViewModel" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAgAgIIAkAQAAAgQAgAAAAAACAAEgAAABAAA=</HashCode>
+      <FileName>ViewModel\ProjectViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Task3.ViewModel.TaskViewModel" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAYABAAAIIAAAQAAAAAAgAAAAAAIAAAAAQAAAAA=</HashCode>
+      <FileName>ViewModel\TaskViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="TasksTracker.Model.AbstractLayer.IProjectDatatAccesLayer&lt;T&gt;">
+    <Position X="3" Y="8" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAAAAAAAAAAAAAABAAAAAQAAAgAAAAAAAAIAAA=</HashCode>
+      <FileName>Model\AbstractLayer\IProjectDatatAccesLayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TasksTracker.Model.AbstractLayer.ITaskDataAccesLayer&lt;T&gt;">
+    <Position X="0.5" Y="8" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAGBAAAAAAAAAEAIAhAAABAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Model\AbstractLayer\ITaskDataAccesLayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Task3
+namespace TasksTracker
 {
     /// <summary>
     /// Interaction logic for App.xaml

@@ -53,6 +53,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -71,46 +72,61 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AddNewProject.xaml.cs">
+    <Compile Include="Components\PDFGenerator.cs" />
+    <Compile Include="Migrations\201606030815169_ProjectDescriptionClass.cs" />
+    <Compile Include="Migrations\201606030815169_ProjectDescriptionClass.Designer.cs">
+      <DependentUpon>201606030815169_ProjectDescriptionClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606030817095_TaskInfoClass.cs" />
+    <Compile Include="Migrations\201606030817095_TaskInfoClass.Designer.cs">
+      <DependentUpon>201606030817095_TaskInfoClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ConcreteLayer\MSSQLServerProjectModel.cs" />
+    <Compile Include="Model\ConcreteLayer\MSSQLServerTaskModel.cs" />
+    <Compile Include="ViewModel\AddNewProjectViewModel.cs" />
+    <Compile Include="ViewModel\ProjectViewModel.cs" />
+    <Compile Include="ViewModel\TaskBoxViewModel.cs" />
+    <Compile Include="ViewModel\TaskViewModel.cs" />
+    <Compile Include="View\AddNewProject.xaml.cs">
       <DependentUpon>AddNewProject.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201512132026590_InitialCreate.cs" />
-    <Compile Include="Migrations\201512132026590_InitialCreate.Designer.cs">
+    <Compile Include="Model\AbstractLayer\ITaskDataAccesLayer.cs" />
+    <Compile Include="Model\AbstractLayer\IProjectDatatAccesLayer.cs" />
+    <Compile Include="Model\Data\Migrations\201512132026590_InitialCreate.cs" />
+    <Compile Include="Model\Data\Migrations\201512132026590_InitialCreate.Designer.cs">
       <DependentUpon>201512132026590_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201601091407110_AddProjectDescriptions.cs" />
-    <Compile Include="Migrations\201601091407110_AddProjectDescriptions.Designer.cs">
+    <Compile Include="Model\Data\Migrations\201601091407110_AddProjectDescriptions.cs" />
+    <Compile Include="Model\Data\Migrations\201601091407110_AddProjectDescriptions.Designer.cs">
       <DependentUpon>201601091407110_AddProjectDescriptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201601092013466_AddPropProjectDescriptionText.cs" />
-    <Compile Include="Migrations\201601092013466_AddPropProjectDescriptionText.Designer.cs">
+    <Compile Include="Model\Data\Migrations\201601092013466_AddPropProjectDescriptionText.cs" />
+    <Compile Include="Model\Data\Migrations\201601092013466_AddPropProjectDescriptionText.Designer.cs">
       <DependentUpon>201601092013466_AddPropProjectDescriptionText.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605281436260_AddTaskInfoclass.cs" />
-    <Compile Include="Migrations\201605281436260_AddTaskInfoclass.Designer.cs">
+    <Compile Include="Model\Data\Migrations\201605281436260_AddTaskInfoclass.cs" />
+    <Compile Include="Model\Data\Migrations\201605281436260_AddTaskInfoclass.Designer.cs">
       <DependentUpon>201605281436260_AddTaskInfoclass.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="ProjectDescriptionModel.cs" />
-    <Compile Include="Data\ProjectDescription.cs" />
-    <Compile Include="Projects.xaml.cs">
-      <DependentUpon>Projects.xaml</DependentUpon>
+    <Compile Include="Model\Data\Migrations\Configuration.cs" />
+    <Compile Include="Model\Data\ProjectDescription.cs" />
+    <Compile Include="View\ProjectsWindow.xaml.cs">
+      <DependentUpon>ProjectsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TaskModel.cs" />
-    <Compile Include="TaskBox.xaml.cs">
+    <Compile Include="View\TaskBox.xaml.cs">
       <DependentUpon>TaskBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\TaskInfo.cs" />
-    <Compile Include="Data\TaskInfoContext.cs" />
-    <Page Include="AddNewProject.xaml">
+    <Compile Include="Model\Data\TaskInfo.cs" />
+    <Compile Include="Model\Data\ProjectInfoContext.cs" />
+    <Page Include="View\AddNewProject.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Projects.xaml">
+    <Page Include="View\ProjectsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ProjectTasks.xaml">
+    <Page Include="View\TasksWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -118,17 +134,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ProjectTasks.xaml.cs">
-      <DependentUpon>ProjectTasks.xaml</DependentUpon>
+    <Compile Include="View\TasksWindow.xaml.cs">
+      <DependentUpon>TasksWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="TaskBox.xaml">
+    <Page Include="View\TaskBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Presenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -142,22 +157,29 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201512132026590_InitialCreate.resx">
+    <EmbeddedResource Include="Migrations\201606030815169_ProjectDescriptionClass.resx">
+      <DependentUpon>201606030815169_ProjectDescriptionClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606030817095_TaskInfoClass.resx">
+      <DependentUpon>201606030817095_TaskInfoClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\Data\Migrations\201512132026590_InitialCreate.resx">
       <DependentUpon>201512132026590_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201601091407110_AddProjectDescriptions.resx">
+    <EmbeddedResource Include="Model\Data\Migrations\201601091407110_AddProjectDescriptions.resx">
       <DependentUpon>201601091407110_AddProjectDescriptions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201601092013466_AddPropProjectDescriptionText.resx">
+    <EmbeddedResource Include="Model\Data\Migrations\201601092013466_AddPropProjectDescriptionText.resx">
       <DependentUpon>201601092013466_AddPropProjectDescriptionText.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605281436260_AddTaskInfoclass.resx">
+    <EmbeddedResource Include="Model\Data\Migrations\201605281436260_AddTaskInfoclass.resx">
       <DependentUpon>201605281436260_AddTaskInfoclass.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagramTaskTimerTracker.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
